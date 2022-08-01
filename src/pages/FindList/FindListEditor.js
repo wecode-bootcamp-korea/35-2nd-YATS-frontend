@@ -1,0 +1,167 @@
+import React, { useState, useEffect } from 'react';
+import DateContainer from './FindListEditor/DateContainer';
+import * as FindListStyle from './FindListEditor.style';
+import { FindListButtonData } from './FindListEditor/FindListButtonData';
+import { FilterListButtonData } from './FilterListButtonData';
+import 'react-datepicker/dist/react-datepicker.css';
+
+const ProductEditor = ({ onChange, startDate, endDate }) => {
+  const [currentMenu, setCurrentMenu] = useState('');
+
+  const handleMenu = (e, menu) => {
+    if (e.currentTarget !== e.target) return;
+
+    if (currentMenu === menu) {
+      setCurrentMenu('');
+    } else {
+      setCurrentMenu(menu);
+    }
+  };
+
+  const [test1, setTest1] = useState('체크인');
+  useEffect(() => {
+    if (startDate !== null) {
+      setTest1(
+        `${startDate.getUTCFullYear()}-${startDate.getMonth()}-${startDate.getDate()}`
+      );
+    }
+  }, [startDate]);
+
+  const [test2, setTest2] = useState('체크아웃');
+  useEffect(() => {
+    if (endDate !== null) {
+      setTest2(
+        `${endDate.getUTCFullYear()}-${endDate.getMonth()}-${endDate.getDate()}`
+      );
+    }
+  }, [endDate]);
+
+  //console.log(currentMenu);
+  //console.log(startDate.getMonth());
+  // console.log(endDate);
+
+  const handleClick = () => {
+    console.log('hello');
+  };
+
+  const Test = ({ onClick }) => {
+    const handleClick = () => onClick();
+    // console.log(props);
+    return (
+      <div>
+        <button onClick={handleClick}>확인</button>
+      </div>
+    );
+  };
+
+  const testData = [
+    {
+      id: 1,
+      value: '인원',
+      component: <Test onClick={handleClick} />,
+    },
+    {
+      id: 2,
+      value: '가격 범위',
+      component: <Test />,
+    },
+  ];
+
+  return (
+    <>
+      <FindListStyle.FirstTitle>
+        F &nbsp; I &nbsp;N &nbsp;D &ensp;&ensp; S &nbsp;T &nbsp;A &nbsp;Y
+      </FindListStyle.FirstTitle>
+      <FindListStyle.SecondTitle>
+        머무는 것 자체로 여행이 되는 공간
+      </FindListStyle.SecondTitle>
+      {testData.map(item => {
+        return <div key={item.id}>{item.component}</div>;
+      })}
+      <FindListStyle.FirstFindList>
+        <FindListStyle.FirstFindItem>
+          <FindListStyle.ChoiceTitle>여행지/숙소</FindListStyle.ChoiceTitle>
+          <FindListStyle.TravelInput
+            onClick={e => handleMenu(e, '여행지/숙소')}
+          />
+          <FindListStyle.Country onClick={e => handleMenu(e, '국내전체')}>
+            국내전체
+          </FindListStyle.Country>
+          <FindListStyle.ChoiceTitle>체크인</FindListStyle.ChoiceTitle>
+          <FindListStyle.DateContainer onClick={e => handleMenu(e, '체크아웃')}>
+            <FindListStyle.Date onClick={e => handleMenu(e, '체크아웃')}>
+              {`${test1}` === null ? `${test1}` : `${test1}`}
+            </FindListStyle.Date>
+            <FindListStyle.DateDownArow
+              src="./images/FindList/DownArrow.png"
+              alt="DownArrow"
+            />
+          </FindListStyle.DateContainer>
+          <FindListStyle.ChoiceTitle>체크아웃</FindListStyle.ChoiceTitle>
+          <FindListStyle.DateContainer onClick={e => handleMenu(e, '체크아웃')}>
+            <FindListStyle.Date onClick={e => handleMenu(e, '체크아웃')}>
+              {`${test2}` === null ? `${test2}` : `${test2}`}
+            </FindListStyle.Date>
+            <FindListStyle.DateDownArow
+              src="./images/FindList/DownArrow.png"
+              alt="DownArrow"
+            />
+            {currentMenu === '체크아웃' && (
+              <DateContainer
+                onChange={onChange}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            )}
+          </FindListStyle.DateContainer>
+        </FindListStyle.FirstFindItem>
+        <FindListStyle.ReCycleButton
+          src="./images/FindList/ReCycle.png"
+          alt="ReCycle"
+          onClick={e => handleMenu(e, '초기화')}
+        />
+      </FindListStyle.FirstFindList>
+      <FindListStyle.FirstFindList>
+        <FindListStyle.FirstFindItem>
+          {FindListButtonData.map(buttonData => {
+            const isCurrentMenu = currentMenu === buttonData.value;
+
+            return (
+              <FindListStyle.ChoiceButton
+                key={buttonData.id}
+                onClick={e => handleMenu(e, buttonData.value)}
+              >
+                {buttonData.value}
+                <FindListStyle.DownArow
+                  src="./images/FindList/DownArrow.png"
+                  alt="DownArrow"
+                />
+                {isCurrentMenu && buttonData.component}
+              </FindListStyle.ChoiceButton>
+            );
+          })}
+        </FindListStyle.FirstFindItem>
+        <FindListStyle.LocationPinIconButton
+          src="./images/FindList/LocationPinIcon.png"
+          alt="LocationPinIcon"
+        />
+      </FindListStyle.FirstFindList>
+      <FindListStyle.SecondFindList>
+        <FindListStyle.SearchButton>
+          SEARCH&ensp;&#10230;
+        </FindListStyle.SearchButton>
+      </FindListStyle.SecondFindList>
+      <FindListStyle.ThirdFindList>
+        {FilterListButtonData.map(buttonData => {
+          return (
+            <FindListStyle.FilterListButton key={buttonData.id}>
+              &bull;&nbsp;{buttonData.value}
+            </FindListStyle.FilterListButton>
+          );
+        })}
+      </FindListStyle.ThirdFindList>
+    </>
+  );
+};
+
+export default ProductEditor;

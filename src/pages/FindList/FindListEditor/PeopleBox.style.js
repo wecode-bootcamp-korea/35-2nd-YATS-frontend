@@ -30,3 +30,31 @@ export const PeopleBoxFirstRightComponent = styled.img`
   width: 20px;
   margin-right: 20px;
 `;
+
+export const PeopleBoxSecondComponent = styled.div`
+  width: 100%;
+  height: 90px;
+  ${props => props.theme.variables.flex('column', 'center', 'center')}
+`;
+
+export const SecondComponentAdult = styled.div`
+  width: 100%;
+  ${props => props.theme.variables.flex('center', 'space-between', 'center')}
+`;
+
+export const SecondComponentChild = styled.div`
+  width: 100%;
+  ${props => props.theme.variables.flex('center', 'space-between', 'center')}
+`;
+
+export const Button = styled.button`
+  color: white;
+  background-color: black;
+  width: 138.95px;
+  height: 36px;
+  font-size: 14px;
+  padding: 0px 20px 0px 25px;
+  font-weight: 600;
+  border-radius: 25px;
+  cursor: pointer;
+`;

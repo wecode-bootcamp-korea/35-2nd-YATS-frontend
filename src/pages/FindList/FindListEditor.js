@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import DateContainer from './FindListEditor/DateContainer';
 import * as FindListStyle from './FindListEditor.style';
-import { FindListButtonData } from './FindListEditor/FindListButtonData';
 import { FilterListButtonData } from './FilterListButtonData';
 import 'react-datepicker/dist/react-datepicker.css';
+import PeopleBox from './FindListEditor/PeopleBox';
+import PriceBox from './FindListEditor/PriceBox';
+import StayBox from './FindListEditor/StayBox';
+import ThemeBox from './FindListEditor/ThemeBox';
 
 const ProductEditor = ({ onChange, startDate, endDate }) => {
   const [currentMenu, setCurrentMenu] = useState('');
@@ -36,34 +39,52 @@ const ProductEditor = ({ onChange, startDate, endDate }) => {
     }
   }, [endDate]);
 
-  //console.log(currentMenu);
-  //console.log(startDate.getMonth());
-  // console.log(endDate);
+  // const handleClick = () => {
+  //   console.log('hello');
+  // };
 
-  const handleClick = () => {
-    console.log('hello');
-  };
+  // const Test = ({ onClick }) => {
+  //   const handleClick = () => onClick();
+  //   return (
+  //     <div>
+  //       <button onClick={handleClick}>확인</button>
+  //     </div>
+  //   );
+  // };
 
-  const Test = ({ onClick }) => {
-    const handleClick = () => onClick();
-    // console.log(props);
-    return (
-      <div>
-        <button onClick={handleClick}>확인</button>
-      </div>
-    );
-  };
+  // const testData = [
+  //   {
+  //     id: 1,
+  //     value: '인원',
+  //     component: <Test onClick={handleClick} />,
+  //   },
+  //   {
+  //     id: 2,
+  //     value: '가격 범위',
+  //     component: <Test onClick={handleClick} />,
+  //   },
+  // ];
 
-  const testData = [
+  const FindListButtonData = [
     {
       id: 1,
       value: '인원',
-      component: <Test onClick={handleClick} />,
+      component: <PeopleBox handleMenu={handleMenu} />,
     },
     {
       id: 2,
       value: '가격 범위',
-      component: <Test />,
+      component: <PriceBox handleMenu={handleMenu} />,
+    },
+    {
+      id: 3,
+      value: '스테이 유형',
+      component: <StayBox handleMenu={handleMenu} />,
+    },
+    {
+      id: 4,
+      value: '테마',
+      component: <ThemeBox handleMenu={handleMenu} />,
     },
   ];
 
@@ -75,9 +96,9 @@ const ProductEditor = ({ onChange, startDate, endDate }) => {
       <FindListStyle.SecondTitle>
         머무는 것 자체로 여행이 되는 공간
       </FindListStyle.SecondTitle>
-      {testData.map(item => {
+      {/* {testData.map(item => {
         return <div key={item.id}>{item.component}</div>;
-      })}
+      })} */}
       <FindListStyle.FirstFindList>
         <FindListStyle.FirstFindItem>
           <FindListStyle.ChoiceTitle>여행지/숙소</FindListStyle.ChoiceTitle>

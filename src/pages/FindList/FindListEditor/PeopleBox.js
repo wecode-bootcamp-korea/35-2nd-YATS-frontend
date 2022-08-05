@@ -1,8 +1,7 @@
 import React from 'react';
 import * as FindListStyle from './PeopleBox.style';
 
-const PeopleBox = handleMenu => {
-  console.log(handleMenu);
+const PeopleBox = ({ handleMenu }) => {
   return (
     <FindListStyle.PeopleBoxContainer>
       <FindListStyle.PeopleBoxFirstComponent>
@@ -14,6 +13,15 @@ const PeopleBox = handleMenu => {
           onClick={e => handleMenu(e, '')}
         />
       </FindListStyle.PeopleBoxFirstComponent>
+      <FindListStyle.PeopleBoxSecondComponent>
+        <FindListStyle.SecondComponentAdult>
+          성인
+        </FindListStyle.SecondComponentAdult>
+        <FindListStyle.SecondComponentChild>
+          아동
+        </FindListStyle.SecondComponentChild>
+      </FindListStyle.PeopleBoxSecondComponent>
+      <FindListStyle.Button>적용하기</FindListStyle.Button>
     </FindListStyle.PeopleBoxContainer>
   );
 };

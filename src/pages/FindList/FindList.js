@@ -10,14 +10,6 @@ const FindList = () => {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 10;
 
-  useEffect(() => {
-    fetch('/data/FindListData.json')
-      .then(res => res.json())
-      .then(result => {
-        setFindListData(result);
-      });
-  }, []);
-
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const onChange = dates => {
@@ -25,6 +17,14 @@ const FindList = () => {
     setStartDate(start);
     setEndDate(end);
   };
+
+  useEffect(() => {
+    fetch('/data/FindListData.json')
+      .then(res => res.json())
+      .then(result => {
+        setFindListData(result);
+      });
+  }, []);
 
   return (
     <FindListStyle.FindListWrapper>

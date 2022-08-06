@@ -23,7 +23,6 @@ const EnterStore = () => {
 
   const addStayinList = e => {
     e.preventDefault();
-    console.log(stayInfo);
   };
 
   return (

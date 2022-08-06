@@ -1,11 +1,10 @@
 import React from 'react';
-import Input from './InputTypes';
+import InputTypes from './InputTypes';
 import Select from './Select';
 import CheckboxList from './CheckboxList';
 import styled from 'styled-components';
 
-const InputList = props => {
-  const { input, handleInput, handleCheckbox, handleInputFile } = props;
+const InputList = ({ input, handleInput, handleCheckbox, handleInputFile }) => {
   const isInput = input.type;
 
   return (
@@ -19,7 +18,7 @@ const InputList = props => {
             // isChecked={isChecked}
           />
         ) : (
-          <Input
+          <InputTypes
             input={input}
             handleInput={handleInput}
             handleInputFile={handleInputFile}

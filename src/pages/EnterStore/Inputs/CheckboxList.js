@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Checkbox from './Checkbox';
 
-const CheckboxList = props => {
-  const { input, className, handleCheckbox } = props;
-
+const CheckboxList = ({ input, className, handleCheckbox }) => {
   return (
     <div className={className}>
       <div>

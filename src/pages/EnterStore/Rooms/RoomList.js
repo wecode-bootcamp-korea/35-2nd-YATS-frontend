@@ -4,16 +4,16 @@ import styled from 'styled-components';
 import Room from './Room';
 import RoomModal from './RoomModal';
 
-const RoomAddButton = ({
+const RoomList = ({
   roomInfo,
   handleInput,
   handleCheckbox,
   className,
   ROOM_DATA,
-  roomList,
-  setRoomList,
   stayInfo,
   initializeRoomInfo,
+  setRoomList,
+  roomList,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -67,7 +67,7 @@ const RoomAddButton = ({
   );
 };
 
-const StyledRoomAddButton = styled(RoomAddButton)`
+const StyledRoomList = styled(RoomList)`
   ${props => props.theme.variables.flex('column', 'flex-start', 'flex-start')}
   flex: 1;
   margin-top: 20px;
@@ -90,4 +90,4 @@ const StyledRoomAddButton = styled(RoomAddButton)`
   }
 `;
 
-export default StyledRoomAddButton;
+export default StyledRoomList;

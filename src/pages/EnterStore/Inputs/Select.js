@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Select = props => {
-  const { className, input, handleInput } = props;
+const Select = ({ className, input, handleInput }) => {
   return (
     <div className={className} input={input}>
       <select onChange={handleInput} name={input.name}>

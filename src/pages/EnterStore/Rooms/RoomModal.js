@@ -2,21 +2,19 @@ import React from 'react';
 import Modal from 'react-modal';
 import InputList from '../Inputs/InputList';
 import styled from 'styled-components';
-import { Title, SubTitle, Form, RoomInfoEnterButton } from '../Valuables';
+import { Title, SubTitle, Form, EnterButton } from '../Valuables';
 
-const RoomModal = props => {
-  const {
-    isOpen,
-    handleModal,
-    roomInfo,
-    roomList,
-    setRoomList,
-    handleInput,
-    handleCheckbox,
-    ROOM_DATA,
-    stayInfo,
-  } = props;
-
+const RoomModal = ({
+  isOpen,
+  handleModal,
+  roomInfo,
+  roomList,
+  setRoomList,
+  handleInput,
+  handleCheckbox,
+  ROOM_DATA,
+  stayInfo,
+}) => {
   const addRoominList = e => {
     e.preventDefault();
     setRoomList([...roomList, roomInfo]);
@@ -71,9 +69,9 @@ const RoomModal = props => {
             />
           );
         })}
-        <RoomInfoEnterButton type="submit" primary="RoomModal">
+        <EnterButton type="submit" primary="RoomModal">
           입력완료
-        </RoomInfoEnterButton>
+        </EnterButton>
       </Form>
     </Modal>
   );

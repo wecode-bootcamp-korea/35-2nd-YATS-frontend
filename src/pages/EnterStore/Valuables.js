@@ -40,7 +40,7 @@ const Form = styled.form`
   border-top: solid 4px black;
 `;
 
-const RoomInfoEnterButton = styled.button`
+const EnterButton = styled.button`
   margin: ${props => (props.primary === 'RoomModal' ? '50px' : '80px')};
   width: 400px;
   height: 50px;
@@ -50,4 +50,4 @@ const RoomInfoEnterButton = styled.button`
   font-size: 16px;
 `;
 
-export { Container, Title, SubTitle, Contents, Form, RoomInfoEnterButton };
+export { Container, Title, SubTitle, Contents, Form, EnterButton };

@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = props => {
-  const { className, input, handleInput, handleInputFile } = props;
-
+const InputTypes = ({ className, input, handleInput, handleInputFile }) => {
   const inputList = {
     text: (
       <input
@@ -118,7 +116,7 @@ const Input = props => {
   );
 };
 
-const StyledInput = styled(Input)`
+const StyledInput = styled(InputTypes)`
   flex: 1;
   ${props => props.theme.variables.flex()}
   height: ${props => (props.input.type === 'textarea' ? '100px' : '50px')}} 

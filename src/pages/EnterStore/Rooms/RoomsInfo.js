@@ -11,20 +11,21 @@ const RoomsInfo = ({
   initializeRoomInfo,
 }) => {
   const [roomList, setRoomList] = useState([]);
+
   Modal.setAppElement('#root');
 
   return (
-    <InputContainer roomList={roomList}>
+    <InputContainer>
       <InputTitle>스테이 룸 정보</InputTitle>
       <RoomList
         roomInfo={roomInfo}
         handleInput={handleInput}
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
-        roomList={roomList}
         stayInfo={stayInfo}
-        setRoomList={setRoomList}
         initializeRoomInfo={initializeRoomInfo}
+        roomList={roomList}
+        setRoomList={setRoomList}
       />
     </InputContainer>
   );
@@ -33,7 +34,7 @@ const RoomsInfo = ({
 const InputContainer = styled.div`
   ${props => props.theme.variables.flex('', 'flex-start', 'flex-start')}
   width:100%;
-  height: ${props => (props.roomList.length === 0 ? '60px' : 'auto')};
+  height: auto;
   border-bottom: 1px solid #e5e5e5;
 `;
 

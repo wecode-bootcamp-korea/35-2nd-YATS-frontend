@@ -13,10 +13,12 @@ const RoomAddButton = ({
   roomList,
   setRoomList,
   stayInfo,
+  initializeRoomInfo,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModal = () => {
+    initializeRoomInfo();
     setIsOpen(!isOpen);
   };
 
@@ -48,7 +50,6 @@ const RoomAddButton = ({
       </div>
       <RoomModal
         isOpen={isOpen}
-        handleModal={handleModal}
         roomInfo={roomInfo}
         roomList={roomList}
         setRoomList={setRoomList}
@@ -56,6 +57,8 @@ const RoomAddButton = ({
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
         stayInfo={stayInfo}
+        initializeRoomInfo={initializeRoomInfo}
+        handleModal={handleModal}
       />
     </div>
   );

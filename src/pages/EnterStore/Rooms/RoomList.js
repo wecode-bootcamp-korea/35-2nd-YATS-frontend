@@ -29,6 +29,9 @@ const RoomAddButton = ({
           return targetName !== room.room_name;
         })
       );
+      stayInfo.rooms = stayInfo.rooms.filter(room => {
+        return targetName !== room.room_name;
+      });
     }
   };
 

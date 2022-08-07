@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DateContainer from './FindListEditor/DateContainer';
 import * as FindListStyle from './FindListEditor.style';
-import { FilterListButtonData } from './FilterListButtonData';
 import 'react-datepicker/dist/react-datepicker.css';
 import PeopleBox from './FindListEditor/PeopleBox';
 import PriceBox from './FindListEditor/PriceBox';
@@ -49,6 +48,10 @@ const ProductEditor = ({
   themeBoxIsAllCheckedHandler,
   themeText,
   handleThemeText,
+  findAreaActiveHandler,
+  fiterListButtonHandler,
+  fiterListButton,
+  FilterListButtonData,
 }) => {
   const [test1, setTest1] = useState('체크인');
   useEffect(() => {
@@ -196,7 +199,9 @@ const ProductEditor = ({
         <FindListStyle.ReCycleButton
           src="./images/FindList/ReCycle.png"
           alt="ReCycle"
-          onClick={e => handleMenu(e, '초기화')}
+          onClick={e => {
+            handleMenu(e, '초기화');
+          }}
         />
       </FindListStyle.FirstFindList>
       <FindListStyle.FirstFindList>
@@ -222,6 +227,9 @@ const ProductEditor = ({
         <FindListStyle.LocationPinIconButton
           src="./images/FindList/LocationPinIcon.png"
           alt="LocationPinIcon"
+          onClick={e => {
+            findAreaActiveHandler();
+          }}
         />
       </FindListStyle.FirstFindList>
       <FindListStyle.SecondFindList>
@@ -231,8 +239,26 @@ const ProductEditor = ({
       </FindListStyle.SecondFindList>
       <FindListStyle.ThirdFindList>
         {FilterListButtonData.map(buttonData => {
+          const isCurrentMenu = fiterListButton === buttonData.value;
+
+          // {
+          //   isCurrentMenu ? (
+          //     <FindListStyle.FilterListButton>
+          //       김밤
+          //     </FindListStyle.FilterListButton>
+          //   ) : (
+          //     <FindListStyle.FilterListButton>
+          //       소시지
+          //     </FindListStyle.FilterListButton>
+          //   );
+          // }
           return (
-            <FindListStyle.FilterListButton key={buttonData.id}>
+            <FindListStyle.FilterListButton
+              key={buttonData.id}
+              onClick={() => {
+                fiterListButtonHandler(buttonData.value, buttonData.id);
+              }}
+            >
               &bull;&nbsp;{buttonData.value}
             </FindListStyle.FilterListButton>
           );

@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import FindListEditor from './FindListEditor';
 import SearchComponent from './SearchComponent';
 import PaginationComponent from './PaginationComponent';
+import { ChoiceContainerData } from './FilterListdata/ChoiceContainerData';
+import { ChoiceContainerLeftData } from './FilterListdata/ChoiceContainerLeftData';
+import { ChoiceContainerRightData } from './FilterListdata/ChoiceContainerRightData';
+import { FilterListButtonData } from './FilterListdata/FilterListButtonData';
 import * as FindListStyle from './FindList.style';
-//import ReCycle from '../../images/ReCycle.png';
+import SearchAreaAtive from './FindListEditor/FindListSearchArea/SearchAreaAtive';
 
 const FindList = () => {
   const [findListData, setFindListData] = useState([]);
@@ -103,18 +107,6 @@ const FindList = () => {
     setAreaData(data);
   };
 
-  const ChoiceContainerData = [
-    { id: 1, value: '게스트하우스' },
-    { id: 2, value: '렌탈하우스' },
-    { id: 3, value: '펜션' },
-    { id: 4, value: '한옥' },
-    { id: 5, value: '캠핑&아웃도어' },
-    { id: 6, value: '호스텔' },
-    { id: 7, value: '리조트' },
-    { id: 8, value: '민박' },
-    { id: 9, value: '호텔' },
-  ];
-
   const [stayBoxCheckedItems, setStayBoxCheckedItems] = useState(new Set());
 
   const stayBoxCheckedItemHandler = (id, isChecked) => {
@@ -150,18 +142,6 @@ const FindList = () => {
     }
   };
 
-  const ChoiceContainerLeftData = [
-    { id: 1, value: '풀빌라' },
-    { id: 2, value: '수영장' },
-    { id: 3, value: 'BBQ' },
-  ];
-
-  const ChoiceContainerRightData = [
-    { id: 4, value: '파티하우스' },
-    { id: 5, value: '재생건축' },
-    { id: 6, value: '로컬투어' },
-    { id: 7, value: '스파' },
-  ];
   const [themeBoxCheckedItems, setThemeBoxCheckedItems] = useState(new Set());
 
   const themeBoxCheckedItemHandler = (id, isChecked) => {
@@ -215,6 +195,28 @@ const FindList = () => {
     }
   };
 
+  const [area, setArea] = useState(true);
+
+  const findAreaActiveHandler = () => {
+    if (area === true) {
+      setArea(false);
+    } else {
+      setArea(true);
+    }
+  };
+
+  const [fiterListButton, setFiterListButton] = useState('');
+
+  const fiterListButtonHandler = (menu, e) => {
+    //console.log(fiterListButton);
+    console.log(e);
+    if (fiterListButton === menu) {
+      setFiterListButton('');
+    } else {
+      setFiterListButton(menu);
+    }
+  };
+
   return (
     <FindListStyle.FindListWrapper>
       <FindListStyle.FindListBox>
@@ -254,12 +256,27 @@ const FindList = () => {
           themeBoxIsAllCheckedHandler={themeBoxIsAllCheckedHandler}
           themeText={themeText}
           handleThemeText={handleThemeText}
+          findAreaActiveHandler={findAreaActiveHandler}
+          fiterListButtonHandler={fiterListButtonHandler}
+          fiterListButton={fiterListButton}
+          FilterListButtonData={FilterListButtonData}
         />
-        <FindListStyle.SearchList>
-          {findListData.slice(offset, offset + 10).map(findList => {
-            return <SearchComponent findList={findList} key={findList.id} />;
-          })}
-        </FindListStyle.SearchList>
+
+        {area === true ? (
+          <FindListStyle.SearchList>
+            {findListData.slice(offset, offset + 10).map(findList => {
+              return <SearchComponent findList={findList} key={findList.id} />;
+            })}
+          </FindListStyle.SearchList>
+        ) : (
+          <FindListStyle.SearchListActive>
+            {findListData.slice(offset, offset + 10).map(findList => {
+              return <SearchComponent findList={findList} key={findList.id} />;
+            })}
+            <SearchAreaAtive />
+          </FindListStyle.SearchListActive>
+        )}
+
         <PaginationComponent
           total={findListData.length}
           limit={10}

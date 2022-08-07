@@ -17,7 +17,8 @@ const RoomList = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleModal = () => {
+  const handleModal = e => {
+    e.preventDefault();
     initializeRoomInfo();
     setIsOpen(!isOpen);
   };
@@ -37,13 +38,7 @@ const RoomList = ({
 
   return (
     <div className={className}>
-      <button
-        className="modalClose"
-        onClick={e => {
-          e.preventDefault();
-          handleModal();
-        }}
-      >
+      <button className="modalClose" onClick={handleModal}>
         ADD ROOM
       </button>
       <div className="roomContainer">

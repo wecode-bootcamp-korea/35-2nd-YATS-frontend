@@ -7,20 +7,49 @@ import PeopleBox from './FindListEditor/PeopleBox';
 import PriceBox from './FindListEditor/PriceBox';
 import StayBox from './FindListEditor/StayBox';
 import ThemeBox from './FindListEditor/ThemeBox';
+import PeopleText from './FindListEditor/FindListText/PeopleText';
+import PriceText from './FindListEditor/FindListText/PriseText';
+import ThemeText from './FindListEditor/FindListText/ThemeText';
+import StayText from './FindListEditor/FindListText/StayText';
+import FindListModal from './FindListEditor/FindListModal/FindListModal';
 
-const ProductEditor = ({ onChange, startDate, endDate }) => {
-  const [currentMenu, setCurrentMenu] = useState('');
-
-  const handleMenu = (e, menu) => {
-    if (e.currentTarget !== e.target) return;
-
-    if (currentMenu === menu) {
-      setCurrentMenu('');
-    } else {
-      setCurrentMenu(menu);
-    }
-  };
-
+const ProductEditor = ({
+  onChange,
+  startDate,
+  endDate,
+  currentMenu,
+  handleMenu,
+  countAdultPeople,
+  adultOnIncrease,
+  adultOnDecrease,
+  countChildPeople,
+  ChildIncrease,
+  ChildOnDecrease,
+  allPeople,
+  handleAllPeople,
+  valuetext,
+  value,
+  handleChange,
+  allPrice,
+  handleAllPrice,
+  areaData,
+  handleAreaData,
+  stayBoxCheckedItems,
+  stayBoxCheckedItemHandler,
+  ChoiceContainerData,
+  stayBoxIsAllChecked,
+  stayBoxCAllCheckedHandler,
+  stayText,
+  handleStayText,
+  ChoiceContainerLeftData,
+  ChoiceContainerRightData,
+  themeBoxCheckedItems,
+  themeBoxCheckedItemHandler,
+  themeBoxIsAllChecked,
+  themeBoxIsAllCheckedHandler,
+  themeText,
+  handleThemeText,
+}) => {
   const [test1, setTest1] = useState('체크인');
   useEffect(() => {
     if (startDate !== null) {
@@ -39,52 +68,74 @@ const ProductEditor = ({ onChange, startDate, endDate }) => {
     }
   }, [endDate]);
 
-  // const handleClick = () => {
-  //   console.log('hello');
-  // };
-
-  // const Test = ({ onClick }) => {
-  //   const handleClick = () => onClick();
-  //   return (
-  //     <div>
-  //       <button onClick={handleClick}>확인</button>
-  //     </div>
-  //   );
-  // };
-
-  // const testData = [
-  //   {
-  //     id: 1,
-  //     value: '인원',
-  //     component: <Test onClick={handleClick} />,
-  //   },
-  //   {
-  //     id: 2,
-  //     value: '가격 범위',
-  //     component: <Test onClick={handleClick} />,
-  //   },
-  // ];
-
   const FindListButtonData = [
     {
       id: 1,
       value: '인원',
-      component: <PeopleBox handleMenu={handleMenu} />,
+      valueComponent: (
+        <PeopleText allPeople={allPeople} handleMenu={handleMenu} />
+      ),
+      component: (
+        <PeopleBox
+          handleMenu={handleMenu}
+          countAdultPeople={countAdultPeople}
+          adultOnIncrease={adultOnIncrease}
+          adultOnDecrease={adultOnDecrease}
+          countChildPeople={countChildPeople}
+          ChildIncrease={ChildIncrease}
+          ChildOnDecrease={ChildOnDecrease}
+          handleAllPeople={handleAllPeople}
+        />
+      ),
     },
     {
       id: 2,
       value: '가격 범위',
-      component: <PriceBox handleMenu={handleMenu} />,
+      valueComponent: <PriceText handleMenu={handleMenu} allPrice={allPrice} />,
+      component: (
+        <PriceBox
+          handleMenu={handleMenu}
+          valuetext={valuetext}
+          value={value}
+          handleChange={handleChange}
+          handleAllPrice={handleAllPrice}
+        />
+      ),
     },
     {
       id: 3,
       value: '스테이 유형',
-      component: <StayBox handleMenu={handleMenu} />,
+      valueComponent: <StayText handleMenu={handleMenu} stayText={stayText} />,
+      component: (
+        <StayBox
+          handleMenu={handleMenu}
+          stayBoxCheckedItems={stayBoxCheckedItems}
+          stayBoxCheckedItemHandler={stayBoxCheckedItemHandler}
+          ChoiceContainerData={ChoiceContainerData}
+          stayBoxIsAllChecked={stayBoxIsAllChecked}
+          stayBoxCAllCheckedHandler={stayBoxCAllCheckedHandler}
+          handleStayText={handleStayText}
+        />
+      ),
     },
     {
       id: 4,
       value: '테마',
-      component: <ThemeBox handleMenu={handleMenu} />,
+      valueComponent: (
+        <ThemeText handleMenu={handleMenu} themeText={themeText} />
+      ),
+      component: (
+        <ThemeBox
+          handleMenu={handleMenu}
+          ChoiceContainerLeftData={ChoiceContainerLeftData}
+          ChoiceContainerRightData={ChoiceContainerRightData}
+          themeBoxCheckedItems={themeBoxCheckedItems}
+          themeBoxCheckedItemHandler={themeBoxCheckedItemHandler}
+          themeBoxIsAllChecked={themeBoxIsAllChecked}
+          themeBoxIsAllCheckedHandler={themeBoxIsAllCheckedHandler}
+          handleThemeText={handleThemeText}
+        />
+      ),
     },
   ];
 
@@ -106,8 +157,14 @@ const ProductEditor = ({ onChange, startDate, endDate }) => {
             onClick={e => handleMenu(e, '여행지/숙소')}
           />
           <FindListStyle.Country onClick={e => handleMenu(e, '국내전체')}>
-            국내전체
+            {areaData}
           </FindListStyle.Country>
+          {currentMenu === '국내전체' && (
+            <FindListModal
+              handleMenu={handleMenu}
+              handleAreaData={handleAreaData}
+            />
+          )}
           <FindListStyle.ChoiceTitle>체크인</FindListStyle.ChoiceTitle>
           <FindListStyle.DateContainer onClick={e => handleMenu(e, '체크아웃')}>
             <FindListStyle.Date onClick={e => handleMenu(e, '체크아웃')}>
@@ -152,7 +209,7 @@ const ProductEditor = ({ onChange, startDate, endDate }) => {
                 key={buttonData.id}
                 onClick={e => handleMenu(e, buttonData.value)}
               >
-                {buttonData.value}
+                {buttonData.valueComponent}
                 <FindListStyle.DownArow
                   src="./images/FindList/DownArrow.png"
                   alt="DownArrow"

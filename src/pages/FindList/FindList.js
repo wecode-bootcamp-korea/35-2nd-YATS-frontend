@@ -209,7 +209,7 @@ const FindList = () => {
 
   const fiterListButtonHandler = (menu, e) => {
     //console.log(fiterListButton);
-    console.log(e);
+    console.log(menu);
     if (fiterListButton === menu) {
       setFiterListButton('');
     } else {
@@ -265,13 +265,25 @@ const FindList = () => {
         {area === true ? (
           <FindListStyle.SearchList>
             {findListData.slice(offset, offset + 10).map(findList => {
-              return <SearchComponent findList={findList} key={findList.id} />;
+              return (
+                <SearchComponent
+                  findList={findList}
+                  key={findList.id}
+                  area={area}
+                />
+              );
             })}
           </FindListStyle.SearchList>
         ) : (
           <FindListStyle.SearchListActive>
             {findListData.slice(offset, offset + 10).map(findList => {
-              return <SearchComponent findList={findList} key={findList.id} />;
+              return (
+                <SearchComponent
+                  findList={findList}
+                  key={findList.id}
+                  area={area}
+                />
+              );
             })}
             <SearchAreaAtive />
           </FindListStyle.SearchListActive>

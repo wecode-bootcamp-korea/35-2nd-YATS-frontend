@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as FindListStyle from './SearchComponent.style';
 import Slider from 'react-slick';
 // import './slick-theme.css';
@@ -6,7 +6,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const SearchComponent = ({ findList }) => {
+const SearchComponent = ({ findList, area }) => {
   //console.log(findList);
   //console.log(findList.name);
   const settings = {
@@ -16,6 +16,16 @@ const SearchComponent = ({ findList }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
+  const [like, setLike] = useState(true);
+  const LikeHandler = () => {
+    if (like === true) {
+      setLike(false);
+    } else {
+      setLike(true);
+    }
+  };
+
   return (
     <FindListStyle.ComponentContainer>
       <FindListStyle.LeftComponent>
@@ -29,12 +39,48 @@ const SearchComponent = ({ findList }) => {
           ￦350,000 ~ ￦450,000
         </FindListStyle.Information>
         <FindListStyle.Reservation>예약하기</FindListStyle.Reservation>
+        {/* <FindListStyle.Like
+          src="./images/FindList/heart.png"
+          alt="Heart"
+          onClick={() => {
+            LikeHandler();
+          }}
+        />
+        <FindListStyle.Like
+          src="./images/FindList/heartActive.png"
+          alt="Heart"
+          onClick={() => {
+            LikeHandler();
+          }}
+        /> */}
+
+        {like === true ? (
+          <FindListStyle.Like
+            src="./images/FindList/heart.png"
+            alt="Heart"
+            onClick={() => {
+              LikeHandler();
+            }}
+          />
+        ) : (
+          <FindListStyle.Like
+            src="./images/FindList/heartActive.png"
+            alt="Heart"
+            onClick={() => {
+              LikeHandler();
+            }}
+          />
+        )}
+
+        {area === true ? null : (
+          <FindListStyle.SearchArea>위치보기</FindListStyle.SearchArea>
+        )}
+        {/* <FindListStyle.SearchArea>위치보기</FindListStyle.SearchArea> */}
       </FindListStyle.LeftComponent>
       {/* <FindListStyle.RightComponent
         src="./images/FindList/Hotel.png"
         alt="DownArrow"
       /> */}
-
       <Slider {...settings}>
         <FindListStyle.RightComponent
           src="./images/FindList/Hotel1.png"

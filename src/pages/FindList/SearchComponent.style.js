@@ -10,6 +10,7 @@ export const ComponentContainer = styled.div`
     width: 70%;
     height: 230px;
     object-fit: cover;
+    position: relative;
   }
 
   .slick-next:before {
@@ -40,7 +41,15 @@ export const ComponentContainer = styled.div`
 
 export const LeftComponent = styled.div`
   ${props => props.theme.variables.flex('column', '', '')}
-  min-width:180px
+  min-width:180px;
+  position: relative;
+`;
+
+export const SearchArea = styled.div`
+  position: absolute;
+  top: 0px;
+  right: -220%;
+  text-decoration: underline;
 `;
 
 export const HotelName = styled.h5`
@@ -72,4 +81,17 @@ export const RightComponent = styled.img`
   width: 100%;
   height: 230px;
   object-fit: cover;
+`;
+
+export const Like = styled.img`
+  position: absolute;
+  top: 220px;
+  /* right: -390px; */
+  right: -220%;
+  width: 30px;
+  z-index: 1;
+  cursor: pointer;
+  @media (max-width: 1068px) {
+    right: -320px;
+  } ;
 `;

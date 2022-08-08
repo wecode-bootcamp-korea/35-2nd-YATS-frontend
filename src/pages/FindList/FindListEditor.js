@@ -240,7 +240,6 @@ const ProductEditor = ({
       <FindListStyle.ThirdFindList>
         {FilterListButtonData.map(buttonData => {
           const isCurrentMenu = fiterListButton === buttonData.value;
-          console.log(isCurrentMenu);
           return (
             <div key={buttonData.id}>
               {isCurrentMenu ? (

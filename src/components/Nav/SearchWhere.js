@@ -20,7 +20,7 @@ const SearchWhere = () => {
 const SearchWhereContainer = styled.div`
   ${props => props.theme.variables.flex()}
   margin: 0 20px;
-  font-size: 17px;
+  font-size: 15px;
 
   &:hover {
     cursor: pointer;

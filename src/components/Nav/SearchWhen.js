@@ -19,8 +19,9 @@ const SearchWhen = () => {
 
 const SearchWhenContainer = styled.div`
   ${props => props.theme.variables.flex()}
-  margin: 0 20px;
-  font-size: 17px;
+  padding: 0 20px;
+  font-size: 15px;
+  border-left: 1px solid #ccc;
 
   &:hover {
     cursor: pointer;

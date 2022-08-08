@@ -1,12 +1,21 @@
 import React from 'react';
-import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 import Menus from './Menus';
+import styled from 'styled-components';
 
 const Nav = () => {
+  const navigate = useNavigate();
+
   return (
     <NavContainer>
-      <Logo>OIL OF YATS</Logo>
+      <Logo
+        onClick={() => {
+          navigate('/');
+        }}
+      >
+        OIL OF YATS
+      </Logo>
       <Search />
       <Menus />
     </NavContainer>
@@ -17,6 +26,7 @@ const NavContainer = styled.nav`
   ${props => props.theme.variables.flex('', 'space-between', 'center')}
   width: 100%;
   height: 76px;
+  border-bottom: 1px solid #eee;
 `;
 const Logo = styled.div`
   ${props => props.theme.variables.flex('', 'start', 'center')}

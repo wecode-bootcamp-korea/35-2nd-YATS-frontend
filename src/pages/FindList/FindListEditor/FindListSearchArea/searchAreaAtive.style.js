@@ -6,5 +6,5 @@ export const SearchAreaAtive = styled.div`
   width: 50%;
   right: 0px;
   height: 800px;
-  border: 3px solid blue;
+  border: 3px solid black;
 `;

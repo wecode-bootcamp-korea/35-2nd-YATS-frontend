@@ -240,27 +240,27 @@ const ProductEditor = ({
       <FindListStyle.ThirdFindList>
         {FilterListButtonData.map(buttonData => {
           const isCurrentMenu = fiterListButton === buttonData.value;
-
-          // {
-          //   isCurrentMenu ? (
-          //     <FindListStyle.FilterListButton>
-          //       김밤
-          //     </FindListStyle.FilterListButton>
-          //   ) : (
-          //     <FindListStyle.FilterListButton>
-          //       소시지
-          //     </FindListStyle.FilterListButton>
-          //   );
-          // }
+          console.log(isCurrentMenu);
           return (
-            <FindListStyle.FilterListButton
-              key={buttonData.id}
-              onClick={() => {
-                fiterListButtonHandler(buttonData.value, buttonData.id);
-              }}
-            >
-              &bull;&nbsp;{buttonData.value}
-            </FindListStyle.FilterListButton>
+            <div key={buttonData.id}>
+              {isCurrentMenu ? (
+                <FindListStyle.FilterListButtonAtive
+                  onClick={() => {
+                    fiterListButtonHandler(buttonData.value, buttonData.id);
+                  }}
+                >
+                  &bull;&nbsp;{buttonData.value}
+                </FindListStyle.FilterListButtonAtive>
+              ) : (
+                <FindListStyle.FilterListButton
+                  onClick={() => {
+                    fiterListButtonHandler(buttonData.value, buttonData.id);
+                  }}
+                >
+                  &bull;&nbsp;{buttonData.value}
+                </FindListStyle.FilterListButton>
+              )}
+            </div>
           );
         })}
       </FindListStyle.ThirdFindList>

@@ -159,3 +159,11 @@ export const FilterListButton = styled.button`
   font-weight: 500;
   cursor: pointer;
 `;
+
+export const FilterListButtonAtive = styled.button`
+  color: black;
+  border: none;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+`;

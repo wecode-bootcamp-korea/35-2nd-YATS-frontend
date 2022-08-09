@@ -32,9 +32,8 @@ export default function useHandleInput() {
     types: '',
     themes: [],
     rooms: [],
-    stay_images: [],
+    stay_images: '',
   });
-
   const initializeRoomInfo = () => {
     setRoomInfo({
       room_name: '',
@@ -54,6 +53,10 @@ export default function useHandleInput() {
       room_images: '',
     });
   };
+  const [roomList, setRoomList] = useState([]);
+  const [stayImages, setStayImages] = useState({ stay_images: '' });
+  const [roomImages, setRoomImages] = useState({ room_images: '' });
+  const [roomImagesList, setRoomImagesList] = useState([]);
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -65,12 +68,14 @@ export default function useHandleInput() {
   };
 
   const handleInputFile = e => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     const isInfoOfStay = Object.keys(stayInfo).includes(name);
     const formData = new FormData();
 
     formData.append('uploadFile', e.target.files);
-    isInfoOfStay ? stayInfo[name].push(formData) : roomInfo[name].push(value);
+    isInfoOfStay
+      ? setStayImages({ [name]: formData })
+      : setRoomImages({ [name]: formData });
   };
 
   const deleteCheckValue = (targetInfo, inputName, checkedValue) => {
@@ -100,13 +105,25 @@ export default function useHandleInput() {
     }
   };
 
+  const addRoominList = e => {
+    setRoomList([...roomList, roomInfo]);
+    stayInfo.rooms.push(roomInfo);
+    setRoomImagesList([...roomImagesList, roomImages]);
+  };
+
   return {
     handleInput,
     handleInputFile,
     handleCheckbox,
     initializeRoomInfo,
+    addRoominList,
     stayInfo,
     setRoomInfo,
     roomInfo,
+    roomList,
+    setRoomList,
+    roomImages,
+    stayImages,
+    roomImagesList,
   };
 }

@@ -17,12 +17,44 @@ const EnterStore = () => {
     handleInputFile,
     handleCheckbox,
     initializeRoomInfo,
+    addRoominList,
     stayInfo,
     roomInfo,
+    roomList,
+    setRoomList,
+    roomImages,
+    stayImages,
+    roomImagesList,
   } = useHandleInput();
 
   const addStayinList = e => {
     e.preventDefault();
+    console.log('stayImages:', stayImages);
+    console.log('roomImagesList:', roomImagesList);
+    // fetch('http://10.58.6.116:8000/stays/entering', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     stay_info: stayInfo,
+    //   }),
+    // });
+    // fetch(
+    //   `http://10.58.6.116:8000/stays/entering/stayimage?stay_name=${stayInfo.stay_name}`,
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       stay_images: stayImages,
+    //     }),
+    //   }
+    // );
+    // fetch(
+    //   `http://10.58.6.116:8000/stays/entering/roomimage?room_name=${stayInfo.rooms[0].room_name}`,
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       room_images: roomImages,
+    //     }),
+    //   }
+    // );
   };
 
   return (
@@ -48,9 +80,13 @@ const EnterStore = () => {
           <RoomsInfo
             roomInfo={roomInfo}
             stayInfo={stayInfo}
+            roomList={roomList}
+            setRoomList={setRoomList}
             handleInput={handleInput}
+            handleInputFile={handleInputFile}
             handleCheckbox={handleCheckbox}
             initializeRoomInfo={initializeRoomInfo}
+            addRoominList={addRoominList}
           />
           <EnterButton onClick={addStayinList}>소개하기</EnterButton>
         </Form>

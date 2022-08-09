@@ -5,8 +5,8 @@ import Room from './Room';
 import RoomModal from './RoomModal';
 
 const RoomList = ({
-  roomInfo,
   handleInput,
+  handleInputFile,
   handleCheckbox,
   className,
   ROOM_DATA,
@@ -14,6 +14,7 @@ const RoomList = ({
   initializeRoomInfo,
   setRoomList,
   roomList,
+  addRoominList,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,15 +49,13 @@ const RoomList = ({
       </div>
       <RoomModal
         isOpen={isOpen}
-        roomInfo={roomInfo}
-        roomList={roomList}
-        setRoomList={setRoomList}
         handleInput={handleInput}
+        handleInputFile={handleInputFile}
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
-        stayInfo={stayInfo}
         initializeRoomInfo={initializeRoomInfo}
         handleModal={handleModal}
+        addRoominList={addRoominList}
       />
     </div>
   );

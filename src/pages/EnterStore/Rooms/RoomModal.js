@@ -7,21 +7,12 @@ import { Title, SubTitle, Form, EnterButton } from '../Valuables';
 const RoomModal = ({
   isOpen,
   handleModal,
-  roomInfo,
-  roomList,
-  setRoomList,
   handleInput,
+  handleInputFile,
   handleCheckbox,
   ROOM_DATA,
-  stayInfo,
+  addRoominList,
 }) => {
-  const addRoominList = e => {
-    e.preventDefault();
-    setRoomList([...roomList, roomInfo]);
-    stayInfo.rooms.push(roomInfo);
-    handleModal();
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -58,13 +49,20 @@ const RoomModal = ({
       <ModalCloseButton onClick={handleModal} />
       <Title primary="RoomModal">ROOM INFORMATION</Title>
       <SubTitle primary="RoomModal">스테이의 룸 정보를 입력해주세요.</SubTitle>
-      <Form onSubmit={addRoominList} primary="RoomModal">
+      <Form
+        onSubmit={e => {
+          addRoominList(e);
+          handleModal(e);
+        }}
+        primary="RoomModal"
+      >
         {ROOM_DATA.map(input => {
           return (
             <InputList
               key={input.id}
               input={input}
               handleInput={handleInput}
+              handleInputFile={handleInputFile}
               handleCheckbox={handleCheckbox}
             />
           );
@@ -86,7 +84,7 @@ const ModalCloseButton = styled.button`
   border: none;
   background-color: white;
   background-size: cover;
-  background-image: url(https://cdn-icons.flaticon.com/png/512/2976/premium/2976286.png?token=exp=1659599056~hmac=0febe0f7372b9b6b41c29339c95b4e0f);
+  background-image: url(https://cdn-icons-png.flaticon.com/512/748/748122.png);
 `;
 
 export default RoomModal;

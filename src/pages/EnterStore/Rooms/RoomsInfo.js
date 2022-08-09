@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import RoomList from './RoomList';
@@ -6,12 +6,14 @@ import RoomList from './RoomList';
 const RoomsInfo = ({
   roomInfo,
   handleInput,
+  handleInputFile,
   handleCheckbox,
   stayInfo,
   initializeRoomInfo,
+  addRoominList,
+  roomList,
+  setRoomList,
 }) => {
-  const [roomList, setRoomList] = useState([]);
-
   Modal.setAppElement('#root');
 
   return (
@@ -20,10 +22,12 @@ const RoomsInfo = ({
       <RoomList
         roomInfo={roomInfo}
         handleInput={handleInput}
+        handleInputFile={handleInputFile}
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
         stayInfo={stayInfo}
         initializeRoomInfo={initializeRoomInfo}
+        addRoominList={addRoominList}
         roomList={roomList}
         setRoomList={setRoomList}
       />

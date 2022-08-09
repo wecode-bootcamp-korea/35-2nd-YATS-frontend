@@ -29,14 +29,19 @@ const SearchComponent = ({ findList, area }) => {
   return (
     <FindListStyle.ComponentContainer>
       <FindListStyle.LeftComponent>
-        <FindListStyle.HotelName>{findList.name}</FindListStyle.HotelName>
-        <FindListStyle.StayWhat>호텔</FindListStyle.StayWhat>
-        <FindListStyle.Information>서울/용산</FindListStyle.Information>
+        <FindListStyle.HotelName>{findList.stay_name}</FindListStyle.HotelName>
+        <FindListStyle.StayWhat>{findList.stay_type}</FindListStyle.StayWhat>
         <FindListStyle.Information>
-          기준 2명(최대 3명)
+          {findList.stay_address.stay_region}/
+          {findList.stay_address.stay_disrtict}
         </FindListStyle.Information>
         <FindListStyle.Information>
-          ￦350,000 ~ ￦450,000
+          기준 {findList.stay_capacitiy.min_capacity}명(최대{' '}
+          {findList.stay_capacitiy.max_capacity}명)
+        </FindListStyle.Information>
+        <FindListStyle.Information>
+          ￦{parseInt(findList.stay_price.low_price).toLocaleString('ko-KR')} ~
+          ￦{parseInt(findList.stay_price.high_price).toLocaleString('ko-KR')}
         </FindListStyle.Information>
         <FindListStyle.Reservation>예약하기</FindListStyle.Reservation>
         {/* <FindListStyle.Like
@@ -83,27 +88,27 @@ const SearchComponent = ({ findList, area }) => {
       /> */}
       <Slider {...settings}>
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel1.png"
+          src={findList.stay_image[0].url}
           alt="DownArrow"
         />
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel2.png"
+          src={findList.stay_image[1].url}
           alt="DownArrow"
         />
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel3.png"
+          src={findList.stay_image[2].url}
           alt="DownArrow"
         />
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel4.png"
+          src={findList.stay_image[3].url}
           alt="DownArrow"
         />
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel5.png"
+          src={findList.stay_image[4].url}
           alt="DownArrow"
         />
         <FindListStyle.RightComponent
-          src="./images/FindList/Hotel6.png"
+          src={findList.stay_image[5].url}
           alt="DownArrow"
         />
       </Slider>

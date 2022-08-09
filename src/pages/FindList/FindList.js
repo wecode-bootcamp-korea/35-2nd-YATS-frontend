@@ -10,6 +10,25 @@ import * as FindListStyle from './FindList.style';
 import SearchAreaAtive from './FindListEditor/FindListSearchArea/SearchAreaAtive';
 
 const FindList = () => {
+  // useEffect(() => {
+  //   fetch('/data/FindListData.json')
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       setFindListData(result);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    fetch('http://10.58.3.187:8000/findstay', {
+      method: 'Get',
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log(result.result);
+        setFindListData(result.result);
+      });
+  }, []);
+
   const [findListData, setFindListData] = useState([]);
   const [page, setPage] = useState(1);
   const offset = (page - 1) * 10;
@@ -76,14 +95,6 @@ const FindList = () => {
       setCurrentMenu('');
     }
   }, [startDate && endDate]);
-
-  useEffect(() => {
-    fetch('/data/FindListData.json')
-      .then(res => res.json())
-      .then(result => {
-        setFindListData(result);
-      });
-  }, []);
 
   function valuetext(value) {
     return `${value}°C`;
@@ -268,7 +279,7 @@ const FindList = () => {
               return (
                 <SearchComponent
                   findList={findList}
-                  key={findList.id}
+                  key={findList.stay_id}
                   area={area}
                 />
               );
@@ -280,7 +291,7 @@ const FindList = () => {
               return (
                 <SearchComponent
                   findList={findList}
-                  key={findList.id}
+                  key={findList.stay_id.id}
                   area={area}
                 />
               );

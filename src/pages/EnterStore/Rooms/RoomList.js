@@ -31,6 +31,11 @@ const RoomList = ({
           return targetName !== room.room_name;
         })
       );
+      setRoomList(
+        roomList.filter(room => {
+          return targetName !== room.room_name;
+        })
+      );
       stayInfo.rooms = stayInfo.rooms.filter(room => {
         return targetName !== room.room_name;
       });

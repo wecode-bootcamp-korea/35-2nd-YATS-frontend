@@ -54,7 +54,7 @@ export default function useHandleInput() {
     });
   };
   const [roomList, setRoomList] = useState([]);
-  const [stayImages, setStayImages] = useState({ stay_images: '' });
+  const [stayImages, setStayImages] = useState('');
   const [roomImages, setRoomImages] = useState({ room_images: '' });
   const [roomImagesList, setRoomImagesList] = useState([]);
 
@@ -71,10 +71,10 @@ export default function useHandleInput() {
     const { name } = e.target;
     const isInfoOfStay = Object.keys(stayInfo).includes(name);
     const formData = new FormData();
-
-    formData.append('uploadFile', e.target.files);
+    console.log(e.target.files[0]);
+    formData.append('stay_images', e.target.files[0]);
     isInfoOfStay
-      ? setStayImages({ [name]: formData })
+      ? setStayImages(formData)
       : setRoomImages({ [name]: formData });
   };
 

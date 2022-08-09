@@ -27,31 +27,31 @@ const EnterStore = () => {
   } = useHandleInput();
 
   const addStayinList = e => {
+    const oilOfYays = 'oilofyats';
     e.preventDefault();
+    console.log(stayInfo);
+    console.log('stayimage:', stayImages);
+    console.log('room_images:', roomImagesList);
     fetch('http://10.58.6.116:8000/stays/entering', {
       method: 'POST',
-      body: JSON.stringify({
-        stay_info: stayInfo,
-      }),
+      body: JSON.stringify(stayInfo),
     });
     fetch(
       `http://10.58.6.116:8000/stays/entering/stayimage?stay_name=${stayInfo.stay_name}`,
       {
         method: 'POST',
-        body: JSON.stringify({
-          stay_images: stayImages,
-        }),
+        body: JSON.stringify(stayImages),
       }
     );
-    fetch(
-      `http://10.58.6.116:8000/stays/entering/roomimage?room_name=${stayInfo.rooms[0].room_name}`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          room_images: roomImagesList,
-        }),
-      }
-    );
+    // fetch(
+    //   `http://10.58.6.116:8000/stays/entering/roomimage?room_name=${stayInfo.rooms[0].room_name}`,
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify({
+    //       room_images: roomImagesList[0],
+    //     }),
+    //   }
+    // );
   };
 
   return (

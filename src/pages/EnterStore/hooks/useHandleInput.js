@@ -105,7 +105,7 @@ export default function useHandleInput() {
     }
   };
 
-  const addRoominList = e => {
+  const addRoominList = () => {
     setRoomList([...roomList, roomInfo]);
     stayInfo.rooms.push(roomInfo);
     setRoomImagesList([...roomImagesList, roomImages]);

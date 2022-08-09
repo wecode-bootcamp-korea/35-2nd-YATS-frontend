@@ -51,7 +51,7 @@ const RoomModal = ({
       <SubTitle primary="RoomModal">스테이의 룸 정보를 입력해주세요.</SubTitle>
       <Form
         onSubmit={e => {
-          addRoominList(e);
+          addRoominList();
           handleModal(e);
         }}
         primary="RoomModal"

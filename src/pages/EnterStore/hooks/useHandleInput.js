@@ -71,7 +71,6 @@ export default function useHandleInput() {
     const { name } = e.target;
     const isInfoOfStay = Object.keys(stayInfo).includes(name);
     const formData = new FormData();
-    console.log(e.target.files[0]);
     formData.append('stay_images', e.target.files[0]);
     isInfoOfStay
       ? setStayImages(formData)

@@ -17,28 +17,43 @@ const EnterStore = () => {
     handleInputFile,
     handleCheckbox,
     initializeRoomInfo,
-    addRoominList,
+    addRoomInList,
     stayInfo,
     roomInfo,
     roomList,
     setRoomList,
     stayImages,
     roomImagesList,
+    formData,
+    stayData,
+    roomData,
+    roomDataList,
   } = useHandleInput();
 
   const addStayinList = e => {
     e.preventDefault();
+
+    for (let pair of stayData.entries()) {
+      console.log('stayData', pair[0] + ', ' + pair[1]);
+    }
+    for (let pair of roomData.entries()) {
+      console.log('roomData', pair[0] + ', ' + pair[1]);
+    }
+    for (let pair of roomDataList.entries()) {
+      console.log('roomDataList', pair[0] + ', ' + pair[1]);
+    }
+
     fetch('http://10.58.4.88:8000/stays/entering', {
       method: 'POST',
-      body: JSON.stringify(stayInfo),
+      body: stayData,
     });
-    fetch(
-      `http://10.58.4.88:8000/stays/entering/stayimage?stay_name=${stayInfo.stay_name}`,
-      {
-        method: 'POST',
-        body: stayImages,
-      }
-    );
+    // fetch(
+    //   `http://10.58.4.88:8000/stays/entering/stayimage?stay_name=${stayInfo.stay_name}`,
+    //   {
+    //     method: 'POST',
+    //     body: stayImages,
+    //   }
+    // );
     // fetch(
     //   `http://10.58.4.88:8000/stays/entering/roomimage?room_name=${stayInfo.rooms[0].room_name}`,
     //   {
@@ -71,15 +86,16 @@ const EnterStore = () => {
             );
           })}
           <RoomsInfo
-            roomInfo={roomInfo}
             stayInfo={stayInfo}
             roomList={roomList}
+            stayData={stayData}
+            roomDataList={roomDataList}
             setRoomList={setRoomList}
             handleInput={handleInput}
             handleInputFile={handleInputFile}
             handleCheckbox={handleCheckbox}
             initializeRoomInfo={initializeRoomInfo}
-            addRoominList={addRoominList}
+            addRoomInList={addRoomInList}
           />
           <EnterButton onClick={addStayinList}>소개하기</EnterButton>
         </Form>

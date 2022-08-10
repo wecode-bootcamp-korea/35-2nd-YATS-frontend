@@ -14,7 +14,9 @@ const RoomList = ({
   initializeRoomInfo,
   setRoomList,
   roomList,
-  addRoominList,
+  addRoomInList,
+  stayData,
+  roomDataList,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,14 +33,8 @@ const RoomList = ({
           return targetName !== room.room_name;
         })
       );
-      setRoomList(
-        roomList.filter(room => {
-          return targetName !== room.room_name;
-        })
-      );
-      stayInfo.rooms = stayInfo.rooms.filter(room => {
-        return targetName !== room.room_name;
-      });
+      roomDataList.delete(targetName);
+      stayData.set('rooms', roomDataList);
     }
   };
 
@@ -60,7 +56,7 @@ const RoomList = ({
         ROOM_DATA={ROOM_DATA}
         initializeRoomInfo={initializeRoomInfo}
         handleModal={handleModal}
-        addRoominList={addRoominList}
+        addRoomInList={addRoomInList}
       />
     </div>
   );

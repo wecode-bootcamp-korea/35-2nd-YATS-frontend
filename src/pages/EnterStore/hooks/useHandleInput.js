@@ -1,6 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function useHandleInput() {
+  const [stayData, setStayData] = useState('');
+  const [roomData, setRoomData] = useState('');
+  const [roomDataList, setRoomDataList] = useState('');
+
+  useEffect(() => {
+    const stayForm = new FormData();
+    const roomForm = new FormData();
+    const roomListFrom = new FormData();
+
+    setStayData(stayForm);
+    setRoomData(roomForm);
+    setRoomDataList(roomListFrom);
+  }, []);
+
   const [roomInfo, setRoomInfo] = useState({
     room_name: '',
     bed: '',
@@ -54,27 +68,26 @@ export default function useHandleInput() {
     });
   };
   const [roomList, setRoomList] = useState([]);
-  const [stayImages, setStayImages] = useState('');
-  const [roomImages, setRoomImages] = useState({ room_images: '' });
-  const [roomImagesList, setRoomImagesList] = useState([]);
 
   const handleInput = e => {
     const { name, value } = e.target;
-    const isInfoOfStay = Object.keys(stayInfo).includes(name);
-
-    isInfoOfStay
-      ? setStayInfo({ ...stayInfo, [name]: value })
-      : setRoomInfo({ ...roomInfo, [name]: value });
+    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
+    if (!isInfoOfRoom) {
+      stayData.set(name, value);
+    } else {
+      setRoomInfo({ ...roomInfo, [name]: value });
+    }
   };
 
   const handleInputFile = e => {
     const { name } = e.target;
-    const isInfoOfStay = Object.keys(stayInfo).includes(name);
+    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
     const formData = new FormData();
     formData.append('stay_images', e.target.files[0]);
-    isInfoOfStay
-      ? setStayImages(formData)
-      : setRoomImages({ [name]: formData });
+
+    !isInfoOfRoom
+      ? stayData.append(name, e.target.files[0])
+      : setRoomInfo({ ...roomInfo, [name]: formData });
   };
 
   const deleteCheckValue = (targetInfo, inputName, checkedValue) => {
@@ -85,7 +98,7 @@ export default function useHandleInput() {
     targetInfo[inputName] = newValues;
   };
 
-  const addOrDeleteCheckValue = (targetInfo, inputName, checkedValue) => {
+  const checkIfItExist = (targetInfo, inputName, checkedValue) => {
     const isExisted = targetInfo[inputName].includes(checkedValue);
 
     isExisted
@@ -95,19 +108,28 @@ export default function useHandleInput() {
 
   const handleCheckbox = e => {
     const { name, value } = e.target;
-    const isInfoOfStay = Object.keys(stayInfo).includes(name);
+    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
 
-    if (isInfoOfStay) {
-      addOrDeleteCheckValue(stayInfo, name, value);
+    if (!isInfoOfRoom) {
+      checkIfItExist(stayInfo, name, value);
+      stayData.set(name, stayInfo[name]);
     } else {
-      addOrDeleteCheckValue(roomInfo, name, value);
+      checkIfItExist(roomInfo, name, value);
     }
   };
 
-  const addRoominList = () => {
+  const addRoomInList = e => {
     setRoomList([...roomList, roomInfo]);
-    stayInfo.rooms.push(roomInfo);
-    setRoomImagesList([...roomImagesList, roomImages]);
+    addRoomData();
+  };
+
+  const addRoomData = () => {
+    ROOM_DATA.forEach(room => {
+      roomData.append(room.name, roomInfo[room.name]);
+    });
+    roomDataList.append(roomInfo.room_name, roomData);
+
+    stayData.append('rooms', roomData);
   };
 
   return {
@@ -115,14 +137,32 @@ export default function useHandleInput() {
     handleInputFile,
     handleCheckbox,
     initializeRoomInfo,
-    addRoominList,
+    addRoomInList,
     stayInfo,
     setRoomInfo,
     roomInfo,
     roomList,
     setRoomList,
-    roomImages,
-    stayImages,
-    roomImagesList,
+    stayData,
+    roomData,
+    roomDataList,
   };
 }
+
+const ROOM_DATA = [
+  { id: 1, name: 'room_name' },
+  { id: 2, name: 'bed' },
+  { id: 3, name: 'min_capacity' },
+  { id: 4, name: 'max_capacity' },
+  { id: 5, name: 'checkin' },
+  { id: 6, name: 'checkout' },
+  { id: 7, name: 'area' },
+  { id: 8, name: 'week_price' },
+  { id: 9, name: 'weekend_price' },
+  { id: 10, name: 'peek_price' },
+  { id: 11, name: 'room_type' },
+  { id: 12, name: 'feature' },
+  { id: 13, name: 'amenity' },
+  { id: 14, name: 'add_on' },
+  { id: 15, name: 'room_images' },
+];

@@ -5,14 +5,16 @@ import RoomList from './RoomList';
 
 const RoomsInfo = ({
   roomInfo,
+  stayData,
   handleInput,
   handleInputFile,
   handleCheckbox,
   stayInfo,
   initializeRoomInfo,
-  addRoominList,
+  addRoomInList,
   roomList,
   setRoomList,
+  roomDataList,
 }) => {
   Modal.setAppElement('#root');
 
@@ -20,16 +22,17 @@ const RoomsInfo = ({
     <InputContainer>
       <InputTitle>스테이 룸 정보</InputTitle>
       <RoomList
-        roomInfo={roomInfo}
         handleInput={handleInput}
         handleInputFile={handleInputFile}
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
         stayInfo={stayInfo}
         initializeRoomInfo={initializeRoomInfo}
-        addRoominList={addRoominList}
+        addRoomInList={addRoomInList}
         roomList={roomList}
         setRoomList={setRoomList}
+        stayData={stayData}
+        roomDataList={roomDataList}
       />
     </InputContainer>
   );
@@ -173,10 +176,10 @@ const ROOM_DATA = [
     name: 'add_on',
     type: 'checkbox',
     option: [
-      { type: '바베큐 그릴 대여', id: 670 },
-      { type: '유아 추가 입실', id: 671 },
-      { type: '무료 조식', id: 672 },
-      { type: '유아용 풀장 대여', id: 673 },
+      { type: 'BBQ', id: 670 },
+      { type: '무료 조식 선택 (신청자에 한함)', id: 671 },
+      { type: '한복 대여', id: 672 },
+      { type: '현금영수증', id: 673 },
     ],
   },
   {

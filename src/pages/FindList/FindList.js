@@ -18,20 +18,36 @@ const FindList = () => {
   //     });
   // }, []);
 
+  const [location, setLocation] = useState([]);
+  console.log(location);
+
   useEffect(() => {
-    fetch('http://10.58.3.187:8000/findstay', {
+    fetch(`http://10.58.5.203:8000/findstay`, {
       method: 'Get',
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result.result);
+        console.log(result);
+        setTotal(result.totalcount);
         setFindListData(result.result);
       });
   }, []);
+  const [total, setTotal] = useState(0);
 
   const [findListData, setFindListData] = useState([]);
   const [page, setPage] = useState(1);
-  const offset = (page - 1) * 10;
+  const offset = (page - 1) * 6;
+
+  useEffect(() => {
+    fetch(`http://10.58.5.203:8000/findstay?offset=${offset}`, {
+      method: 'Get',
+    })
+      .then(res => res.json())
+      .then(result => {
+        setTotal(result.totalcount);
+        setFindListData(result.result);
+      });
+  }, [page]);
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -228,6 +244,17 @@ const FindList = () => {
     }
   };
 
+  const [tavelInputText, setTavelInputText] = useState('');
+
+  const travelInputOnChange = e => {
+    console.log(tavelInputText);
+    setTavelInputText(e.target.value);
+  };
+
+  const latitudeLongitudeHandle = e => {
+    console.log(e);
+  };
+
   return (
     <FindListStyle.FindListWrapper>
       <FindListStyle.FindListBox>
@@ -271,11 +298,13 @@ const FindList = () => {
           fiterListButtonHandler={fiterListButtonHandler}
           fiterListButton={fiterListButton}
           FilterListButtonData={FilterListButtonData}
+          tavelInputText={tavelInputText}
+          travelInputOnChange={travelInputOnChange}
         />
 
         {area === true ? (
           <FindListStyle.SearchList>
-            {findListData.slice(offset, offset + 10).map(findList => {
+            {findListData.map(findList => {
               return (
                 <SearchComponent
                   findList={findList}
@@ -287,12 +316,15 @@ const FindList = () => {
           </FindListStyle.SearchList>
         ) : (
           <FindListStyle.SearchListActive>
-            {findListData.slice(offset, offset + 10).map(findList => {
+            {findListData.map(findList => {
               return (
                 <SearchComponent
                   findList={findList}
-                  key={findList.stay_id.id}
+                  key={findList.stay_id}
                   area={area}
+                  location={location}
+                  setLocation={setLocation}
+                  latitudeLongitudeHandle={latitudeLongitudeHandle}
                 />
               );
             })}
@@ -301,8 +333,8 @@ const FindList = () => {
         )}
 
         <PaginationComponent
-          total={findListData.length}
-          limit={10}
+          total={total}
+          limit={6}
           page={page}
           setPage={setPage}
         />

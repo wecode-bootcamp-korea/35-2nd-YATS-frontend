@@ -6,7 +6,13 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const SearchComponent = ({ findList, area }) => {
+const SearchComponent = ({
+  findList,
+  area,
+  location,
+  setLocation,
+  latitudeLongitudeHandle,
+}) => {
   //console.log(findList);
   //console.log(findList.name);
   const settings = {
@@ -78,14 +84,15 @@ const SearchComponent = ({ findList, area }) => {
         )}
 
         {area === true ? null : (
-          <FindListStyle.SearchArea>위치보기</FindListStyle.SearchArea>
+          <FindListStyle.SearchArea
+            onClick={() =>
+              setLocation([findList.stay_latitude, findList.stay_longitude])
+            }
+          >
+            위치보기
+          </FindListStyle.SearchArea>
         )}
-        {/* <FindListStyle.SearchArea>위치보기</FindListStyle.SearchArea> */}
       </FindListStyle.LeftComponent>
-      {/* <FindListStyle.RightComponent
-        src="./images/FindList/Hotel.png"
-        alt="DownArrow"
-      /> */}
       <Slider {...settings}>
         <FindListStyle.RightComponent
           src={findList.stay_image[0].url}

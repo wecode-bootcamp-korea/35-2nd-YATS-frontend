@@ -50,6 +50,7 @@ export const SearchArea = styled.div`
   top: 0px;
   right: -220%;
   text-decoration: underline;
+  cursor: pointer;
 `;
 
 export const HotelName = styled.h5`

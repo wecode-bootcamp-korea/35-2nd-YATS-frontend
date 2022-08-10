@@ -52,6 +52,8 @@ const ProductEditor = ({
   fiterListButtonHandler,
   fiterListButton,
   FilterListButtonData,
+  travelInputOnChange,
+  tavelInputText,
 }) => {
   const [test1, setTest1] = useState('체크인');
   useEffect(() => {
@@ -158,6 +160,8 @@ const ProductEditor = ({
           <FindListStyle.ChoiceTitle>여행지/숙소</FindListStyle.ChoiceTitle>
           <FindListStyle.TravelInput
             onClick={e => handleMenu(e, '여행지/숙소')}
+            onChange={travelInputOnChange}
+            value={tavelInputText}
           />
           <FindListStyle.Country onClick={e => handleMenu(e, '국내전체')}>
             {areaData}

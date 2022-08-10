@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FindListEditor from './FindListEditor';
 import SearchComponent from './SearchComponent';
 import PaginationComponent from './PaginationComponent';
@@ -10,16 +11,9 @@ import * as FindListStyle from './FindList.style';
 import SearchAreaAtive from './FindListEditor/FindListSearchArea/SearchAreaAtive';
 
 const FindList = () => {
-  // useEffect(() => {
-  //   fetch('/data/FindListData.json')
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       setFindListData(result);
-  //     });
-  // }, []);
+  const navigate = useNavigate();
 
   const [location, setLocation] = useState([]);
-  console.log(location);
 
   useEffect(() => {
     fetch(`http://10.58.5.203:8000/findstay`, {
@@ -27,7 +21,6 @@ const FindList = () => {
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result);
         setTotal(result.totalcount);
         setFindListData(result.result);
       });
@@ -47,6 +40,7 @@ const FindList = () => {
         setTotal(result.totalcount);
         setFindListData(result.result);
       });
+    // navigate(`/FindList?${offset=${offset}}${sort=${sort}}`);
   }, [page]);
 
   const [startDate, setStartDate] = useState(null);
@@ -106,10 +100,30 @@ const FindList = () => {
     } else setAllPeople('인원');
   };
 
+  const checkDate =
+    startDate && endDate
+      ? `&checkin=${startDate?.getUTCFullYear()}-${startDate?.getMonth()}-${startDate?.getDate()}&checkout=${endDate.getUTCFullYear()}-${endDate.getMonth()}-${endDate.getDate()}`
+      : '';
+
   useEffect(() => {
     if (endDate !== null && startDate !== null) {
       setCurrentMenu('');
+
+      fetch(
+        `http://10.58.5.203:8000/findstay?checkin=${startDate.getUTCFullYear()}-${startDate.getMonth()}-${startDate.getDate()}&checkout=${endDate.getUTCFullYear()}-${endDate.getMonth()}-${endDate.getDate()}`,
+        {
+          method: 'Get',
+        }
+      )
+        .then(res => res.json())
+        .then(result => {
+          console.log(result);
+          setTotal(result.totalcount);
+          setFindListData(result.result);
+        });
+      navigate(`/FindList?${checkDate}&sort=${sort}`);
     }
+    // navigate(`/FindList?${offset=${offset}}${sort=${sort}}`);
   }, [startDate && endDate]);
 
   function valuetext(value) {
@@ -133,6 +147,15 @@ const FindList = () => {
   const handleAreaData = data => {
     setAreaData(data);
   };
+
+  // const [data, setData] = useState({
+  //   adult: 0,
+  //   baby: 0,
+  //   min: 0,
+  //   max: 0,
+  //   stay: [],
+  //   theme: [],
+  // });
 
   const [stayBoxCheckedItems, setStayBoxCheckedItems] = useState(new Set());
 
@@ -233,15 +256,27 @@ const FindList = () => {
   };
 
   const [fiterListButton, setFiterListButton] = useState('');
+  const [sort, setSort] = useState('');
+  // const checkSort = sort ? `sort=${sort}` : '';
 
-  const fiterListButtonHandler = (menu, e) => {
-    //console.log(fiterListButton);
-    console.log(menu);
+  const fiterListButtonHandler = (menu, id, sort) => {
     if (fiterListButton === menu) {
       setFiterListButton('');
     } else {
       setFiterListButton(menu);
     }
+    console.log(sort);
+    fetch(`http://10.58.5.203:8000/findstay?sort=${sort}`, {
+      method: 'Get',
+    })
+      .then(res => res.json())
+      .then(result => {
+        setTotal(result.totalcount);
+        setFindListData(result.result);
+      });
+    //console.log('checkSort', checkSort);
+
+    navigate(`/FindList?${checkDate}&sort=${sort}`);
   };
 
   const [tavelInputText, setTavelInputText] = useState('');
@@ -304,30 +339,32 @@ const FindList = () => {
 
         {area === true ? (
           <FindListStyle.SearchList>
-            {findListData.map(findList => {
-              return (
-                <SearchComponent
-                  findList={findList}
-                  key={findList.stay_id}
-                  area={area}
-                />
-              );
-            })}
+            {findListData &&
+              findListData.map(findList => {
+                return (
+                  <SearchComponent
+                    findList={findList}
+                    key={findList.stay_id}
+                    area={area}
+                  />
+                );
+              })}
           </FindListStyle.SearchList>
         ) : (
           <FindListStyle.SearchListActive>
-            {findListData.map(findList => {
-              return (
-                <SearchComponent
-                  findList={findList}
-                  key={findList.stay_id}
-                  area={area}
-                  location={location}
-                  setLocation={setLocation}
-                  latitudeLongitudeHandle={latitudeLongitudeHandle}
-                />
-              );
-            })}
+            {findListData &&
+              findListData.map(findList => {
+                return (
+                  <SearchComponent
+                    findList={findList}
+                    key={findList.stay_id}
+                    area={area}
+                    location={location}
+                    setLocation={setLocation}
+                    latitudeLongitudeHandle={latitudeLongitudeHandle}
+                  />
+                );
+              })}
             <SearchAreaAtive />
           </FindListStyle.SearchListActive>
         )}

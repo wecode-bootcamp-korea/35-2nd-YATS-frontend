@@ -249,7 +249,11 @@ const ProductEditor = ({
               {isCurrentMenu ? (
                 <FindListStyle.FilterListButtonAtive
                   onClick={() => {
-                    fiterListButtonHandler(buttonData.value, buttonData.id);
+                    fiterListButtonHandler(
+                      buttonData.value,
+                      buttonData.id,
+                      buttonData.sort
+                    );
                   }}
                 >
                   &bull;&nbsp;{buttonData.value}
@@ -257,7 +261,11 @@ const ProductEditor = ({
               ) : (
                 <FindListStyle.FilterListButton
                   onClick={() => {
-                    fiterListButtonHandler(buttonData.value, buttonData.id);
+                    fiterListButtonHandler(
+                      buttonData.value,
+                      buttonData.id,
+                      buttonData.sort
+                    );
                   }}
                 >
                   &bull;&nbsp;{buttonData.value}

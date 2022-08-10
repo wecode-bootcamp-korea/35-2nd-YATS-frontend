@@ -94,30 +94,42 @@ const SearchComponent = ({
         )}
       </FindListStyle.LeftComponent>
       <Slider {...settings}>
-        <FindListStyle.RightComponent
-          src={findList.stay_image[0].url}
-          alt="DownArrow"
-        />
-        <FindListStyle.RightComponent
-          src={findList.stay_image[1].url}
-          alt="DownArrow"
-        />
-        <FindListStyle.RightComponent
-          src={findList.stay_image[2].url}
-          alt="DownArrow"
-        />
-        <FindListStyle.RightComponent
-          src={findList.stay_image[3].url}
-          alt="DownArrow"
-        />
-        <FindListStyle.RightComponent
-          src={findList.stay_image[4].url}
-          alt="DownArrow"
-        />
-        <FindListStyle.RightComponent
-          src={findList.stay_image[5].url}
-          alt="DownArrow"
-        />
+        {findList.stay_image[0] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[0].url}
+            alt="DownArrow"
+          />
+        )}
+        {findList.stay_image[1] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[1].url}
+            alt="DownArrow"
+          />
+        )}
+        {findList.stay_image[2] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[2].url}
+            alt="DownArrow"
+          />
+        )}
+        {findList.stay_image[3] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[3].url}
+            alt="DownArrow"
+          />
+        )}
+        {findList.stay_image[4] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[4].url}
+            alt="DownArrow"
+          />
+        )}
+        {findList.stay_image[5] && (
+          <FindListStyle.RightComponent
+            src={findList.stay_image[5].url}
+            alt="DownArrow"
+          />
+        )}
       </Slider>
     </FindListStyle.ComponentContainer>
   );

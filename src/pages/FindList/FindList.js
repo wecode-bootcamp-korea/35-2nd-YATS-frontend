@@ -121,6 +121,7 @@ const FindList = () => {
           setTotal(result.totalcount);
           setFindListData(result.result);
         });
+      console.log(sort);
       navigate(`/FindList?${checkDate}&sort=${sort}`);
     }
     // navigate(`/FindList?${offset=${offset}}${sort=${sort}}`);
@@ -265,12 +266,13 @@ const FindList = () => {
     } else {
       setFiterListButton(menu);
     }
-    console.log(sort);
+    setSort(sort);
     fetch(`http://10.58.5.203:8000/findstay?sort=${sort}`, {
       method: 'Get',
     })
       .then(res => res.json())
       .then(result => {
+        console.log(result);
         setTotal(result.totalcount);
         setFindListData(result.result);
       });

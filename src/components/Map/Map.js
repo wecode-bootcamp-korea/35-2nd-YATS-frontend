@@ -1,51 +1,63 @@
 import React, { useEffect } from 'react';
-import { markerdata } from '../Map/markerdata';
+import { positions } from '../Map/positions';
 import styled from 'styled-components';
 
-const Map = () => {
+const Map = ({ location }) => {
   useEffect(() => {
     mapscript();
   }, []);
+
   const mapscript = () => {
     const { kakao } = window;
 
-    let container = document.getElementById('map');
-    let options = {
-      center: new kakao.maps.LatLng(markerdata[0].lat, markerdata[0].lng),
+    let mapContainer = document.getElementById('map');
+    let mapOptions = {
+      center: new kakao.maps.LatLng(positions[0].lat, positions[0].lng),
       level: 5,
     };
-    //   //map
-    const map = new kakao.maps.Map(container, options);
-    //마커가 표시 될 위치
-    //   // let markerPosition = new kakao.maps.LatLng(
-    //   //   36.624915253753194,
-    //   //   127.15122688059974
-    //   // );
-    //   // 마커를 생성
-    //   // let marker = new kakao.maps.Marker({
-    //   //   position: markerPosition,
-    //   // });
-    //   // 마커를 지도 위에 표시
-    markerdata.forEach(el => {
-      // 마커를 생성합니다
-      new kakao.maps.Marker({
-        //마커가 표시 될 지도
-        map: map,
-        //마커가 표시 될 위치
-        position: new kakao.maps.LatLng(el.lat, el.lng),
-        //마커에 hover시 나타날 title
-        title: el.title,
+    //map
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
+
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    let zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+    // 지도가 확대 또는 축소되면 마지막 파라미터로 넘어온 함수를 호출하도록 이벤트를 등록합니다
+    kakao.maps.event.addListener(map, 'zoom_changed', function () {});
+
+    map.setCenter(mapOptions.center);
+
+    let bounds = new kakao.maps.LatLngBounds();
+    let i, InfoWindow;
+    for (i = 0; i < positions.length; i++) {
+      // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+      InfoWindow = new kakao.maps.InfoWindow({
+        position: new kakao.maps.LatLng(positions[i].lat, positions[i].lng),
+        content: `<div style="padding:7px;"><p>${positions[i].title}</p></div>`,
+        removable: true,
       });
-    });
+      InfoWindow.setMap(map);
+
+      // LatLngBounds 객체에 좌표를 추가합니다
+      bounds.extend(new kakao.maps.LatLng(positions[i].lat, positions[i].lng));
+    }
+
+    function setBounds() {
+      // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+      // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+      map.setBounds(bounds);
+    }
+    setBounds();
   };
+
   return (
     <Container>
       <MapContainer id="map">
         <StayDescription>
           <StayOutline>
-            <StayTitle>{markerdata[0].title}</StayTitle>
+            <StayTitle>{positions[0].title}</StayTitle>
             <StayAddress>서울특별시 용산구 동자자동 43-205</StayAddress>
-            <StayEmail>{markerdata[0].email}</StayEmail>
+            <StayEmail>{positions[0].email}</StayEmail>
           </StayOutline>
         </StayDescription>
       </MapContainer>
@@ -54,16 +66,16 @@ const Map = () => {
 };
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${props => props.theme.variables.flex('column', '', 'center')};
   height: 100vh;
   width: 100vh;
 `;
+
 const MapContainer = styled.div`
   width: 1000px;
   height: 600px;
 `;
+
 const StayDescription = styled.div`
   position: absolute;
   right: 5%;
@@ -72,6 +84,7 @@ const StayDescription = styled.div`
   background-color: white;
   z-index: 2;
 `;
+
 const StayOutline = styled.div`
   height: 95%;
   width: 95;
@@ -79,16 +92,19 @@ const StayOutline = styled.div`
   border-radius: 5px;
   margin: 5px;
 `;
+
 const StayTitle = styled.p`
   text-align: center;
   font-size: 20px;
   margin: 20px auto 40px auto;
 `;
+
 const StayAddress = styled.p`
   margin: auto 10px auto 10px;
 `;
+
 const StayEmail = styled.p`
-  margin: 20px 10px auto 10px;
+  margin: 20px 10px 20px 10px;
 `;
 
 export default Map;

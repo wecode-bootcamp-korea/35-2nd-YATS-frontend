@@ -19,14 +19,15 @@ const Nothing = () => {
 };
 
 const NothingContents = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${props => props.theme.variables.flex('column', '', 'center')};
 `;
+
 const UpcomingImg = styled.img`
   width: 50%;
 `;
+
 const UpcomingText = styled.p``;
+
 const FindStayButton = styled.button`
   border: none;
   background-color: black;

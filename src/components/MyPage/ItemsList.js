@@ -1,52 +1,94 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Nothing from './Nothing';
 
-const ItemList = whichTabSelected => {
-  const [items, setItems] = useState([]);
-  // const CallData = () => {
-  //   fetch(`http:///MyPage/${whichTabSelected}`)
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       setItems(result);
-  //     });
-  // };
+const ItemList = ({ items, setItems }) => {
   return (
     <List>
-      {items.length === 0 && <Nothing />}
-      {items.length !== 0 &&
+      {items.length === 0 ? (
+        <Nothing />
+      ) : (
+        items.length !== 0 &&
         items.map((item, index) => {
           return (
             <IndividualItem
+              setItems={setItems}
               key={index}
-              id={item.id}
-              name={item.title}
-              price={item.price}
-              thumbnailImage={item.thumbnail_images}
-              types={item.types}
+              name={item.room_name}
+              lowprice={item.stay_price.low_price}
+              highprice={item.stay_price.high_price}
+              lowcapacity={item.stay_capacity.min_capacity}
+              highcapacity={item.stay_capacity.max_capacity}
+              checkin={item.check_in}
+              checkout={item.check_out}
+              region={item.stay_address.stay_region}
+              district={item.stay_address.stay_district}
+              thumbnailImage={item.room_image}
+              type={item.stay_type}
             />
           );
-        })}
+        })
+      )}
     </List>
   );
 };
 
-const IndividualItem = () => {
+const IndividualItem = ({
+  setItems,
+  items,
+  name,
+  lowprice,
+  highprice,
+  id,
+  district,
+  region,
+  type,
+  lowcapacity,
+  highcapacity,
+  checkin,
+  checkout,
+  thumbnailImage,
+}) => {
+  const onRemove = id => {
+    setItems(items.filter(item => item.id !== id));
+  };
   return (
     <IndividualItemContainer>
+      <DeleteButton
+        onClick={() => {
+          onRemove(id);
+        }}
+      >
+        삭제X
+      </DeleteButton>
       <IndividualItemNameType>
-        <ItemName>스테이 아린</ItemName>
-        <ItemType>펜션</ItemType>
+        <ItemName>{name}</ItemName>
+        <ItemType>{type}</ItemType>
       </IndividualItemNameType>
       <IndividualItemText>
         <LocaCapaPriceReserve>
-          <Location>제주/서귀포시</Location>
-          <Capacity>기준 4명(최대 4명)</Capacity>
-          <Price>₩500,000 ~ ₩600,000</Price>
+          <CheckIn>Check-In : {checkin}</CheckIn>
+          <CheckOut>Check-Out : {checkout}</CheckOut>
+          <Location>{region + ' ' + district}</Location>
+          <Capacity>
+            {'기준인원' +
+              ':' +
+              lowcapacity +
+              ' ' +
+              '최대인원' +
+              ':' +
+              highcapacity}
+          </Capacity>
+          <Price>
+            {'₩' +
+              Math.floor(lowprice).toLocaleString() +
+              '~' +
+              Math.floor(highprice).toLocaleString()}
+          </Price>
           <ReserveButton>예약하기</ReserveButton>
         </LocaCapaPriceReserve>
         {/* <IndividualItemImgWrapper> */}
-        <IndividualItemImg src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+        <IndividualItemImg src={thumbnailImage} />
         {/* </IndividualItemImgWrapper> */}
       </IndividualItemText>
     </IndividualItemContainer>
@@ -54,45 +96,62 @@ const IndividualItem = () => {
 };
 
 const List = styled.div``;
+
 const IndividualItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${props => props.theme.variables.flex('column', '', '')};
+  position: relative;
   height: 400px;
   width: 600px;
   padding: 50px 20px 50px 20px;
 `;
-// const IndividualItemImgWrapper = styled.div``;
+
+const DeleteButton = styled.p`
+  position: absolute;
+  right: 5%;
+  top: 0;
+  text-decoration: underline;
+  font-size: 20px;
+`;
+
 const IndividualItemImg = styled.img`
   width: 60%;
 `;
+
 const IndividualItemText = styled.div`
-  display: flex;
+  ${props => props.theme.variables.flex('', 'space-between', '')};
   width: 100%;
-  justify-content: space-between;
 `;
+
 const IndividualItemNameType = styled.div``;
 const ItemName = styled.p`
   font-size: 35px;
 `;
+
 const ItemType = styled.p``;
 
 const LocaCapaPriceReserve = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  ${props => props.theme.variables.flex('column', 'flex-end', '')};
 `;
+
+const CheckIn = styled.p``;
+
+const CheckOut = styled.p``;
+
 const Location = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
+
 const Capacity = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
+
 const Price = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
+
 const ReserveButton = styled.p`
   margin: 35px auto 5px auto;
   font-weight: 700;

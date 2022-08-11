@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const LoginOauth = () => {
-
   const AUTH_CODE = window.location.search;
   const navigate = useNavigate();
 
@@ -18,7 +17,6 @@ const LoginOauth = () => {
           navigate('/login');
           alert('회원가입 되셨습니다!');
         } else if (result.message === 'LOGIN') {
-
           navigate('/FindList');
           navigate('/FindList');
           alert('로그인 성공!');

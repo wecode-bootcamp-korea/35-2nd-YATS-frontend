@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Location = ({ region, isClickedTotal }) => {
-  const [isClicked, setIsClicked] = useState(false);
-  const toggleRegion = () => {
-    isClickedTotal ? 
-    setIsClicked(!isClicked);
-  };
-
   return (
     <RegionContainer>
       <Region region={region}>{region.title}</Region>
@@ -30,8 +24,5 @@ const Region = styled.div`
     cursor: pointer;
   }`
       : ''}
-
-}
-}
 `;
 export default Location;

@@ -35,7 +35,7 @@ const CalanderImg = styled.div`
   height: 20px;
   margin: 0 8px;
   background-size: cover;
-  background-image: url(https://cdn-icons.flaticon.com/png/512/661/premium/661507.png?token=exp=1659883613~hmac=da7548f1d2f8e6da11dea0deffbcb7c7);
+  background-image: url(https://cdn-icons-png.flaticon.com/512/833/833595.png);
 `;
 
 export default SearchWhen;

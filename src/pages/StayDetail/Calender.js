@@ -81,4 +81,4 @@ const StyledCalander = styled(Calander)`
   }
 `;
 
-//export default StyledCalander;
+export default StyledCalander;

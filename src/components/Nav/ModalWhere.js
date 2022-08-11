@@ -1,10 +1,11 @@
-import React from 'react';
-import Region from './Region';
+import React, { useState } from 'react';
+import Location from './Location';
 import ReactModal from 'react-modal';
 import styled from 'styled-components';
 
 const ModalWhere = ({ isOpen, handleModal, className }) => {
   ReactModal.setAppElement('#root');
+  const [isClickedTotal, setIsClickedTotal] = useState(false);
 
   return (
     <ReactModal
@@ -17,20 +18,26 @@ const ModalWhere = ({ isOpen, handleModal, className }) => {
       <Title>어디로 떠날까요?</Title>
       <CloseButton onClick={handleModal} />
       <Searchbar />
-      <Location>
+      <WhereTo>
         <LocationContainer>
           <LocationTitle>국내</LocationTitle>
-          {DOMESTIC_LOCATAION_DATA.map(location => {
-            return <Region key={location.id} location={location} />;
+          {DOMESTIC_LOCATAION_DATA.map(region => {
+            return (
+              <Location
+                key={region.id}
+                region={region}
+                isClickedTotal={isClickedTotal}
+              />
+            );
           })}
         </LocationContainer>
         <LocationContainer>
           <LocationTitle>해외</LocationTitle>
-          {ABROAD_LOCATAION_DATA.map(location => {
-            return <Region key={location.id} location={location} />;
+          {ABROAD_LOCATAION_DATA.map(region => {
+            return <Location key={region.id} region={region} />;
           })}
         </LocationContainer>
-      </Location>
+      </WhereTo>
       <SearchButton />
     </ReactModal>
   );
@@ -133,7 +140,7 @@ const Searchbar = styled(Input)`
   }
 `;
 
-const Location = styled.div`
+const WhereTo = styled.div`
   ${props => props.theme.variables.flex()}
   width: 95%;
   height: auto;
@@ -202,58 +209,72 @@ const DOMESTIC_LOCATAION_DATA = [
   {
     id: 0,
     title: '국내전체',
+    type: '국내',
   },
   {
     id: 1,
     title: '제주',
+    type: '국내',
   },
   {
     id: 2,
     title: '서울',
+    type: '국내',
   },
   {
     id: 3,
     title: '강원',
+    type: '국내',
   },
   {
     id: 4,
     title: '부산',
+    type: '국내',
   },
   {
     id: 5,
     title: '경기',
+    type: '국내',
   },
   {
     id: 6,
     title: '충청',
+    type: '국내',
   },
   {
     id: 7,
     title: '경상',
+    type: '국내',
   },
   {
     id: 8,
     title: '전라',
+    type: '국내',
   },
   {
     id: 9,
     title: '인천',
+    type: '국내',
   },
   {
     id: 10,
     title: '광주',
+    type: '국내',
   },
   {
     id: 11,
     title: '대전',
+    type: '국내',
   },
   {
     id: 12,
     title: '대구',
+    type: '국내',
   },
   {
     id: 13,
     title: '울산',
+    type: '국내',
   },
 ];
 
@@ -261,61 +282,76 @@ const ABROAD_LOCATAION_DATA = [
   {
     id: 0,
     title: '베트남',
+    type: '해외',
   },
   {
     id: 1,
     title: '태국',
+    type: '해외',
   },
   {
     id: 2,
     title: '대만',
+    type: '해외',
   },
   {
     id: 3,
     title: '인도네시아',
+    type: '해외',
   },
   {
     id: 4,
     title: '라오스',
+    type: '해외',
   },
   {
     id: 5,
     title: '일본',
+    type: '해외',
   },
   {
     id: 6,
     title: '',
+    type: '해외',
   },
   {
     id: 7,
     title: '',
+    type: '해외',
   },
   {
     id: 8,
     title: '',
+    type: '해외',
   },
   {
     id: 9,
     title: '',
+    type: '해외',
   },
   {
     id: 10,
     title: '',
+    type: '해외',
   },
   {
     id: 11,
     title: '',
+    type: '해외',
   },
   {
     id: 12,
     title: '',
+    type: '해외',
   },
   {
     id: 13,
     title: '',
+    type: '해외',
   },
   {
     id: 14,
     title: '',
+    type: '해외',
   },
 ];

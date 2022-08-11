@@ -17,5 +17,5 @@ export default Search;
 const SearchContainer = styled.div`
   ${props => props.theme.variables.flex('')}
   position: fixed;
-  left: 30%;
+  left: 40%;
 `;

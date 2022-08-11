@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Nothing from './Nothing';
-
 const ItemList = ({ items, setItems, whichTabSelected }) => {
   const onRemove = targetName => {
     setItems(
@@ -14,13 +13,11 @@ const ItemList = ({ items, setItems, whichTabSelected }) => {
     fetch('http://10.58.4.88:8000/books/cancel', {
       method: 'POST',
       headers: {
-        Authorization:
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.GSstTMM1LoYE8a10vs51ZFnqAikEpf_kFLUTLqy4KCo',
+        Authorization: localStorage.getItem('access_token'),
       },
       body: JSON.stringify({ book_number: booknumber }),
     });
   };
-
   return (
     <List>
       {items.length === 0 ? (
@@ -54,7 +51,6 @@ const ItemList = ({ items, setItems, whichTabSelected }) => {
     </List>
   );
 };
-
 const IndividualItem = ({
   whichTabSelected,
   onRemove,
@@ -72,7 +68,6 @@ const IndividualItem = ({
   checkout,
   thumbnailImage,
 }) => {
-  console.log(booknumber);
   return (
     <IndividualItemContainer>
       {whichTabSelected !== '2' && (
@@ -118,9 +113,7 @@ const IndividualItem = ({
     </IndividualItemContainer>
   );
 };
-
 const List = styled.div``;
-
 const IndividualItemContainer = styled.div`
   ${props => props.theme.variables.flex('column', '', '')};
   position: relative;
@@ -128,7 +121,6 @@ const IndividualItemContainer = styled.div`
   width: 600px;
   padding: 50px 20px 50px 20px;
 `;
-
 const DeleteButton = styled.p`
   position: absolute;
   right: 5%;
@@ -136,63 +128,49 @@ const DeleteButton = styled.p`
   text-decoration: underline;
   font-size: 20px;
 `;
-
 const IndividualItemImgWrapper = styled.div`
   ${props => props.theme.variables.flex('', 'center', 'center')};
   height: 250px;
   width: 380px;
 `;
-
 const IndividualItemImg = styled.img`
   object-fit: cover;
   height: 250px;
   width: 380px;
 `;
-
 const IndividualItemText = styled.div`
   ${props => props.theme.variables.flex('', 'space-between', '')};
   width: 100%;
 `;
-
 const IndividualItemNameType = styled.div``;
-
 const ItemName = styled.p`
   font-size: 35px;
 `;
-
 const ItemType = styled.p``;
-
 const LocaCapaPriceReserve = styled.div`
   ${props => props.theme.variables.flex('column', 'flex-end', '')};
 `;
-
 const CheckIn = styled.p`
   text-align: center;
 `;
-
 const CheckOut = styled.p`
   text-align: center;
 `;
-
 const Location = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
-
 const Capacity = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
-
 const Price = styled.p`
   margin: 10px auto 10px auto;
   font-size: 13px;
 `;
-
 const ReserveButton = styled.p`
   margin: 20px auto 5px auto;
   font-weight: 700;
   text-decoration: underline;
 `;
-
 export default ItemList;

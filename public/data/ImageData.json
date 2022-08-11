@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "livingroom1",
+    "src": "/images/StayDetail/house1.jpeg",
+    "alt": "livingroom"
+  },
+  {
+    "id": 2,
+    "name": "livingroom2",
+    "src": "/images/StayDetail/house2.jpeg",
+    "alt": "livingroom2"
+  },
+  {
+    "id": 3,
+    "name": "bedroom",
+    "src": "/images/StayDetail/house3.jpeg",
+    "alt": "bedroom"
+  },
+  {
+    "id": 4,
+    "name": "kitchen",
+    "src": "/images/StayDetail/house4.jpeg",
+    "alt": "kitchen"
+  },
+  {
+    "id": 5,
+    "name": "bathroom",
+    "src": "/images/StayDetail/house5.jpeg",
+    "alt": "bathroom"
+  }
+]

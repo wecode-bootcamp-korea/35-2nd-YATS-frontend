@@ -8,7 +8,7 @@ const LoginOauth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://10.58.2.120:8000/users/kakao${AUTH_CODE}`, {
+    fetch(`http://10.58.4.88:8000/users/kakao${AUTH_CODE}`, {
       method: 'GET',
     })
       .then(response => response.json())

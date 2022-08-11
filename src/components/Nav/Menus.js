@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Menus = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('login-token');
+  const token = localStorage.getItem('access_token');
 
   return (
     <MenusContainer>

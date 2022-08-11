@@ -83,11 +83,15 @@ export default function useHandleInput() {
     const { name } = e.target;
     const isInfoOfRoom = Object.keys(roomInfo).includes(name);
     const formData = new FormData();
-    formData.append('stay_images', e.target.files[0]);
+    // formData.append('stay_images', e.target.files[0]);
 
-    !isInfoOfRoom
-      ? stayData.append(name, e.target.files[0])
-      : setRoomInfo({ ...roomInfo, [name]: formData });
+    if (!isInfoOfRoom) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        stayData.append(`${name}`, e.target.files);
+      }
+    } else {
+      setRoomInfo({ ...roomInfo, [name]: formData });
+    }
   };
 
   const deleteCheckValue = (targetInfo, inputName, checkedValue) => {

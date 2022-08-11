@@ -43,7 +43,7 @@ const EnterStore = () => {
       console.log('roomDataList', pair[0] + ', ' + pair[1]);
     }
 
-    fetch('http://10.58.4.88:8000/stays/entering', {
+    fetch('http://10.58.4.88:8000/entering', {
       method: 'POST',
       body: stayData,
     });
@@ -73,7 +73,7 @@ const EnterStore = () => {
         {ENTER_DESCRIPTION.map(dscrp => {
           return <Contents key={dscrp.id}>{dscrp.content}</Contents>;
         })}
-        <Form>
+        <Form onSubmit={addStayinList} encType="multipart/form-data">
           {STAY_DATA.map(input => {
             return (
               <InputList
@@ -97,7 +97,7 @@ const EnterStore = () => {
             initializeRoomInfo={initializeRoomInfo}
             addRoomInList={addRoomInList}
           />
-          <EnterButton onClick={addStayinList}>소개하기</EnterButton>
+          <EnterButton>소개하기</EnterButton>
         </Form>
       </Container>
     </div>

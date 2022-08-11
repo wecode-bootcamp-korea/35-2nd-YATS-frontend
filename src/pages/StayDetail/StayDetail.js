@@ -1,9 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
-
 import SecondSlide from './SecondSlide';
 import MiniSlide from './MiniSlide';
 import Faqcontainer from './Faqcontainer';
@@ -11,34 +10,74 @@ import Calender from './Calender';
 
 const StayDetail = () => {
   const [isModal, setIsModal] = useState(false);
+  const [stayData, setStayData] = useState([]);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const location = useLocation();
+  console.log(location.pathname);
+
+  const params = useParams();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`http://10.58.1.45:8000/findstay/${params.id}`)
+      .then(res => res.json())
+      .then(data => setStayData(data.result));
+  }, []);
+
+  const onChange = dates => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+  };
+
+  const name = stayData.length && stayData[0].stay_name;
+  const keyword = stayData.length && stayData[0].stay_keyword;
+  const content_top = stayData.length && stayData[0].stay_content_top;
+  const content_bottom = stayData.length && stayData[0].stay_content_bottom;
+  const roomname = stayData.length && stayData[0].stay_rooms[0].room_name;
+  const roomtype = stayData.length && stayData[0].stay_rooms[0].room_type;
+  const stayregion = stayData.length && stayData[0].stay_address.stay_region;
+  const staydistrict =
+    stayData.length && stayData[0].stay_address.stay_district;
   return (
     <>
       {/* 슬라이드 시작 */}
       <MainStayBox>
         <MainSlideBox>
-          <SecondSlide />
+          <SecondSlide Data={stayData} />
         </MainSlideBox>
         <BlackBox>
           <KeywordBox>
-            <Keyword>쉼과 사랑의 시작</Keyword>
+            <Keyword>{keyword}</Keyword>
           </KeywordBox>
           <InfoBox>
-            <InfoName>스테이디</InfoName>
-            <InfoArea>강원 / 고성군</InfoArea>
+            <InfoName>{name}</InfoName>
+            <InfoArea>
+              {stayregion}/ {staydistrict}
+            </InfoArea>
           </InfoBox>
         </BlackBox>
       </MainStayBox>
-      {/* 숙박 날짜 선택 */}
       <BtnSelectBox>
-        {/* <StayName>스테이디</StayName> */}
         <BtnSelect>
           <ChoiceDate>
-            <Button onClick={() => setIsModal(true)}>
-              날짜를 선택해 주세요.
+            <Button onClick={() => setIsModal(prev => !prev)}>
+              {!startDate || !endDate
+                ? `날짜를 선택해 주세요.`
+                : `${startDate.getMonth()}-${startDate.getDate()} ~ ${startDate.getMonth()}-${endDate.getDate()}`}
               <FontAwesomeIcon className="icon" icon={faAngleDown} />
             </Button>
             {isModal ? (
-              <Calender isModal={isModal} setIsModal={setIsModal} />
+              <Calender
+                isModal={isModal}
+                setIsModal={setIsModal}
+                startDate={startDate}
+                endDate={endDate}
+                onChange={onChange}
+              />
             ) : null}
           </ChoiceDate>
         </BtnSelect>
@@ -49,71 +88,58 @@ const StayDetail = () => {
           <RoomBox>
             <RoomNameBox>
               <RoomIntro>ROOM</RoomIntro>
+              <RoomInfoText>{keyword}</RoomInfoText>
             </RoomNameBox>
           </RoomBox>
         </GrayBox>
         <MiniSlideBox>
           <MiniSlide />
+          <MiniSlide Data={stayData} />
         </MiniSlideBox>
         {/* 이미지 속 검정 박스 안 룸 타입 내용들 */}
         <BlackLayout>
           <RoomTexLeftBox>
             <RoomNameType>
-              <RoomName>스테이디</RoomName>
-              <RoomType>독채형</RoomType>
+              <RoomName>{roomname}</RoomName>
+              <RoomType>{roomtype}</RoomType>
             </RoomNameType>
             <RoomBedType>기준 2명 (최대 3명) • 침구 2개</RoomBedType>
           </RoomTexLeftBox>
           <RoomTexRightBox>
             <RoomPrice>₩ 350,000 ~</RoomPrice>
             <ReservationBtn>
-              <Button>예약하기</Button>
+              <Button
+                type="button"
+                onClick={() => navigate(`/room/${roomname}`)}
+              >
+                예약하기
+              </Button>
             </ReservationBtn>
           </RoomTexRightBox>
         </BlackLayout>
       </RoomContainer>
-      {/* 디테일 정보 시작 */}
       <Detailinfo>
         <InfoTitle>
-          <InfoTitleName>일상으로부터 벗어나 바다를 마주보다</InfoTitleName>
-          <InfoStayName>스테이디</InfoStayName>
+          <InfoTitleName>{keyword}</InfoTitleName>
+          <InfoStayName>{name}</InfoStayName>
         </InfoTitle>
-        <InfoTxt1>
-          스테이디는 동해바다와 제가 사랑하는 사람의 이니셜 입니다. 바닷가에서
-          빛나던 그 사람은 저에게 또 다른 바다였습니다. 평온함을 찾아 바다로
-          떠났던 그때의 그 느낌이 당신에게도 전달되기를 바랍니다.
-        </InfoTxt1>
-        <InfoTxt2>
-          동틀 무렵 침대에 누워 통창으로 보이는 해를 바라보며 시작하여, 해질
-          무렵 유리블럭으로 들어오는 노을빛은 스테이디의 또 다른 매력입니다.
-          숙소 바로 앞 해변은 조용하고 한적한 장소입니다. 연인 또는 가족간의
-          오붓한 피크닉을 떠나 보세요. 해질 무렵 루프탑에서는 노을을 즐길 수
-          있고, 저녁엔 침대에 누워 빔프로젝터로 영화를 볼 수 있습니다.
-        </InfoTxt2>
+        <InfoTxt1>{content_top}</InfoTxt1>
+        <InfoTxt2>{content_bottom}</InfoTxt2>
       </Detailinfo>
       {/* 테마 박스 시작 */}
       <SpecialBox>
-        <SpecialImg
-          src="https://images.unsplash.com/photo-1604629761628-5640ee399e18?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-          alt="house"
-        />
-        <ThemeBox>
-          <ThemeSmallBox>
-            <ThemeBoxs>
-              <p>니나니뇨</p>
-            </ThemeBoxs>
-          </ThemeSmallBox>
-        </ThemeBox>
+        <ThemeImg src="./images/StayDetail/logtheme.png" alt="themeimg" />
       </SpecialBox>
       {/* 숙소 주소 */}
       <AdressInfo>
-        <Adress>
-          스테이디의 주소는 [ 강원도 고성군 죽왕면 가향길 20-2 ] 입니다.
-        </Adress>
+        <AdressText>
+          네비게이션에 '경기도 파주시 탄현면 헤이리마을길 61'을 입력해주세요.
+        </AdressText>
+        <Parking>건물 앞에 주차 가능하며, 3층으로 오시면 됩니다.</Parking>
       </AdressInfo>
       {/* 숙소 지도 */}
       <MapInfo>
-        <Map>지도 넣을 자리</Map>
+        <Map>{/* <location /> */}</Map>
       </MapInfo>
       {/* 하단 FAQ 시작 */}
       <Faqcontainer />
@@ -122,10 +148,6 @@ const StayDetail = () => {
 };
 
 export default StayDetail;
-
-{
-  /* 스타일드 컴포넌트 시작 */
-}
 
 const MainSlideBox = styled.div`
   position: relative;
@@ -143,6 +165,8 @@ const Keyword = styled.p`
 `;
 const InfoBox = styled.div`
   margin-right: 50px;
+
+  text-align: center;
 `;
 const InfoName = styled.p`
   font-size: 25px;
@@ -156,9 +180,6 @@ const BlackBox = styled.div`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   color: #f0f0f0;
-`;
-const StayName = styled.p`
-  font-size: 20px;
 `;
 
 const ChoiceDate = styled.p`
@@ -224,6 +245,12 @@ const RoomIntro = styled.p`
   margin-left: 40px;
 `;
 
+const RoomInfoText = styled.p`
+  font-size: 16px;
+  margin-top: 40px;
+  margin-left: 40px;
+`;
+
 const RoomTexLeftBox = styled.div`
   margin-left: 40px;
 `;
@@ -283,6 +310,9 @@ const InfoTitleName = styled.p`
 `;
 const InfoStayName = styled.p`
   font-size: 14px;
+
+  letter-spacing: 10px;
+  margin-top: 5px;
 `;
 const InfoTxt1 = styled.p`
   margin: 60px;
@@ -296,108 +326,41 @@ const SpecialBox = styled.div`
   position: relative;
 `;
 
-const SpecialImg = styled.img`
+const ThemeImg = styled.img`
   width: 100vw;
   height: 500px;
   object-fit: cover;
 `;
 
-const ThemeBox = styled.div`
-  ${props => props.theme.variables.Position('absolute', '0', '')}
-  /* position: absolute;
-  top: 0px; */
-  width: 100vw;
-  height: 500px;
-  background-color: #000;
-  opacity: 0.3;
-`;
-const ThemeSmallBox = styled.div`
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background-color: #000;
-`;
-const ThemeBoxs = styled.div`
-  width: 300px;
-  height: 300px;
-  background-color: #000;
-`;
-const ThemeText = styled.p``;
-
 const AdressInfo = styled.div``;
-const Adress = styled.p`
+
+const AdressText = styled.p`
   margin: 60px;
   font-size: 15px;
   text-align: center;
 `;
+// const InfoPerson = styled.div``;
+// const InfoPersonTitle = styled.p`
+//   ${props => props.theme.variables.Position('absolute', '135px', '200px')}
+//   color: #fff;
+//   font-size: 16px;
+// `;
+// const InfoPrice = styled.div``;
+// const InfoTicket = styled.div`
+//   ${props => props.theme.variables.Position('absolute', '130px', '300px')}
+//   color: #868e96;
+//   border: 1px solid #868e96;
+// `;
+
+const Adress = styled.p`
+  font-size: 15px;
+  text-align: center;
+`;
+const Parking = styled(Adress)``;
+
 const MapInfo = styled.div``;
-const Map = styled.div``;
-
-const FaqMenuMainBox = styled.div`
-  ${props => props.theme.variables.Position('absolute', '30px', '20px')}
-`;
-
-const FaqMenu = styled.div`
-  font-size: 20px;
-  color: #fff;
-  letter-spacing: 10px;
-`;
-const FaqMenuBox = styled.div`
-  margin-top: 50px;
-`;
-
-const FaqEtc = styled.div`
-  margin-top: 30px;
-  font-size: 16px;
-  color: #495057;
-`;
-
-const FaqPersons = styled.div`
-  font-size: 16px;
-  color: #fff;
-`;
-const FaqPrice = styled(FaqEtc)``;
-const FaqInfo = styled(FaqEtc)``;
-const Faqfacility = styled(FaqEtc)``;
-
-const FaqInfoContainer = styled.div``;
-const FaqInfoText = styled.p`
-  ${props => props.theme.variables.Position('absolute', '30px', '200px')}
-  color: #fff;
-  font-size: 18px;
-`;
-const FaqBigTable = styled.div``;
-
-const FaqTitle = styled.div`
-  ${props => props.theme.variables.Position('absolute', '97px', '200px')}
-  color: #fff;
-  font-size: 20px;
-`;
-const FaqInfoTable = styled.div``;
-
-const InfoPerson = styled.div``;
-const InfoPersonTitle = styled.p`
-  ${props => props.theme.variables.Position('absolute', '135px', '200px')}
-  color: #fff;
-  font-size: 16px;
-`;
-const InfoPrice = styled.div``;
-const InfoTicket = styled.div`
-  ${props => props.theme.variables.Position('absolute', '130px', '300px')}
-  color: #868e96;
-  border: 1px solid #868e96;
-`;
-const FaqPersonTable = styled.div``;
-const PersonTitle = styled.div``;
-const PersonTable = styled.div``;
-const PersonInfo = styled.div``;
-const InfoPersonInfo = styled.p`
-  ${props => props.theme.variables.Position('absolute', '200px', '300px')}
-  color: #fff;
-  p {
-    margin-top: 10px;
-    line-height: 2;
-    font-size: 14px;
-    color: #868e96;
-  }
+const Map = styled.img`
+  width: 100vw;
+  height: 600px;
+  object-fit: contain;
 `;

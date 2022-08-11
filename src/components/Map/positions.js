@@ -1,4 +1,4 @@
-export const markerdata = [
+export const positions = [
   {
     title: '콜드스퀘어',
     lat: 37.62197524055062,
@@ -25,8 +25,8 @@ export const markerdata = [
   },
   {
     title: 'ㅋㅋㅋ',
-    lat: 37.62452342323422,
-    lng: 127.15211231231222,
+    lat: 37.485799,
+    lng: 126.943404,
     email: 'asdf@naver.com',
   },
 ];

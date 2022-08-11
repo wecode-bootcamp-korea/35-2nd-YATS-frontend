@@ -39,8 +39,6 @@ const LoginPageWrapper = styled.div`
   height: 100vh;
 `;
 
-
-
 const LoginBox = styled.div`
   ${props => props.theme.variables.flex('column', 'center', '')};
   width: 360px;
@@ -50,6 +48,7 @@ const TitleBox = styled.div`
   height: 102px;
   padding-top: 32px;
 `;
+
 const Title1 = styled.h1`
   text-align: center;
   font-size: 20px;
@@ -57,18 +56,21 @@ const Title1 = styled.h1`
   text-indent: 12px;
   font-weight: 700;
 `;
+
 const Title2 = styled.p`
   text-align: center;
   font-size: 12px;
   line-height: 14px;
   margin: 8px 0 0;
 `;
+
 const Form = styled.form`
   ${props => props.theme.variables.flex('column', 'center', '')};
   margin-top: 30px;
   margin-bottom: 30px;
   border-top: 1px solid black;
 `;
+
 const InputId = styled.input`
   border: none;
   border-bottom: 1px solid rgb(170, 170, 170);
@@ -76,6 +78,7 @@ const InputId = styled.input`
   height: 46px;
   width: 100%;
 `;
+
 const InputPw = styled.input`
   border: none;
   border-bottom: 1px solid rgb(170, 170, 170);
@@ -83,6 +86,7 @@ const InputPw = styled.input`
   height: 46px;
   width: 100%;
 `;
+
 const LoginButton = styled.button`
   color: white;
   background-color: black;
@@ -100,20 +104,26 @@ const SignUpButton = styled.button`
 const FindPwNotUser = styled.div`
   ${props => props.theme.variables.flex('', 'space-between', '')};
 `;
+
 const FindPw = styled.span`
   color: rgb(170, 170, 170);
 `;
+
 const NotUser = styled.span`
   color: rgb(170, 170, 170);
 `;
+
 const KakaoButtonLink = styled.a`
   ${props => props.theme.variables.flex('', 'center', '')};
 `;
+
 const KakaoButton = styled.img`
   width: 100%;
 `;
+
 const SnsLoginComment = styled.p`
   margin-top: 70px;
   text-align: center;
 `;
+
 export default Login;

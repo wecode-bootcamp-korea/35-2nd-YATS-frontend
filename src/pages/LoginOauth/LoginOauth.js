@@ -5,8 +5,7 @@ import styled from 'styled-components';
 
 const LoginOauth = () => {
 
-  const AUTH_CODE = window.location.search.replace('?code=', '')
-
+  const AUTH_CODE = window.location.search;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const LoginOauth = () => {
         } else if (result.message === 'LOGIN') {
 
           navigate('/FindList');
-
+          navigate('/FindList');
           alert('로그인 성공!');
           localStorage.setItem('access_token', result.token);
         } else {

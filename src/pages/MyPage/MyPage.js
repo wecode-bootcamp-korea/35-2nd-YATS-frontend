@@ -94,7 +94,11 @@ const MyPage = () => {
             </MyStay>
             <ReservedItem>
               <UpcomingReservation>{articleTitle}</UpcomingReservation>
-              <ItemList items={items} />
+              <ItemList
+                items={items}
+                setItems={setItems}
+                whichTabSelected={whichTabSelected}
+              />
               <UpcomingStayItem />
             </ReservedItem>
           </ReserveStatus>

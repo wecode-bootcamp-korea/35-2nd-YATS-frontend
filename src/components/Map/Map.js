@@ -2,10 +2,29 @@ import React, { useEffect } from 'react';
 import { positions } from '../Map/positions';
 import styled from 'styled-components';
 
-const Map = ({ location }) => {
+const Map = ({ result, location }) => {
   useEffect(() => {
-    mapscript();
-  }, []);
+    !result ? mapscriptDefault() : mapscript();
+  }, [result]);
+
+  const mapscriptDefault = () => {
+    const { kakao } = window;
+
+    let mapContainer = document.getElementById('map');
+    let mapOptions = {
+      center: new kakao.maps.LatLng(37.506295, 127.053664),
+      level: 2,
+    };
+    //map
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
+
+    let InfoWindow;
+    InfoWindow = new kakao.maps.InfoWindow({
+      position: new kakao.maps.LatLng(37.506295, 127.053664),
+      content: `<div style="padding:7px;"><p>위워크 선릉2호점</p></div>`,
+      removable: true,
+    });
+  };
 
   const mapscript = () => {
     const { kakao } = window;
@@ -29,7 +48,7 @@ const Map = ({ location }) => {
 
     let bounds = new kakao.maps.LatLngBounds();
     let i, InfoWindow;
-    for (i = 0; i < positions.length; i++) {
+    for (i = 0; i < result.length; i++) {
       // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
       InfoWindow = new kakao.maps.InfoWindow({
         position: new kakao.maps.LatLng(positions[i].lat, positions[i].lng),
@@ -55,9 +74,19 @@ const Map = ({ location }) => {
       <MapContainer id="map">
         <StayDescription>
           <StayOutline>
-            <StayTitle>{positions[0].title}</StayTitle>
-            <StayAddress>서울특별시 용산구 동자자동 43-205</StayAddress>
-            <StayEmail>{positions[0].email}</StayEmail>
+            {!location ? (
+              <>
+                <StayTitle>위워크 선릉 2호점</StayTitle>
+                <StayAddress>부트캠프</StayAddress>
+                <StayEmail />
+              </>
+            ) : (
+              <>
+                <StayTitle />
+                <StayAddress />
+                <StayEmail>{positions[0].email}</StayEmail>
+              </>
+            )}
           </StayOutline>
         </StayDescription>
       </MapContainer>
@@ -79,7 +108,7 @@ const MapContainer = styled.div`
 const StayDescription = styled.div`
   position: absolute;
   right: 5%;
-  top: 5%;
+  bottom: 5%;
   border-radius: 5px;
   background-color: white;
   z-index: 2;
@@ -96,7 +125,7 @@ const StayOutline = styled.div`
 const StayTitle = styled.p`
   text-align: center;
   font-size: 20px;
-  margin: 20px auto 40px auto;
+  margin: 20px 10px 40px 10px;
 `;
 
 const StayAddress = styled.p`

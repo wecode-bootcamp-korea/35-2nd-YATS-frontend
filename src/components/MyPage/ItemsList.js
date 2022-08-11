@@ -2,7 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import Nothing from './Nothing';
 
-const ItemList = ({ items, setItems }) => {
+const ItemList = ({ items, setItems, whichTabSelected }) => {
+  const onRemove = targetName => {
+    setItems(
+      items.filter(item => {
+        return targetName !== item.room_name;
+      })
+    );
+  };
+  const deleteNotice = booknumber => {
+    fetch('http://10.58.4.88:8000/books/cancel', {
+      method: 'POST',
+      headers: {
+        Authorization:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.GSstTMM1LoYE8a10vs51ZFnqAikEpf_kFLUTLqy4KCo',
+      },
+      body: JSON.stringify({ book_number: booknumber }),
+    });
+  };
+
   return (
     <List>
       {items.length === 0 ? (
@@ -12,8 +30,12 @@ const ItemList = ({ items, setItems }) => {
         items.map((item, index) => {
           return (
             <IndividualItem
+              whichTabSelected={whichTabSelected}
+              onRemove={onRemove}
+              deleteNotice={deleteNotice}
               setItems={setItems}
               key={index}
+              booknumber={item.book_number}
               name={item.room_name}
               lowprice={item.stay_price.low_price}
               highprice={item.stay_price.high_price}
@@ -34,12 +56,13 @@ const ItemList = ({ items, setItems }) => {
 };
 
 const IndividualItem = ({
-  setItems,
-  items,
+  whichTabSelected,
+  onRemove,
+  deleteNotice,
+  booknumber,
   name,
   lowprice,
   highprice,
-  id,
   district,
   region,
   type,
@@ -49,18 +72,19 @@ const IndividualItem = ({
   checkout,
   thumbnailImage,
 }) => {
-  const onRemove = id => {
-    setItems(items.filter(item => item.id !== id));
-  };
+  console.log(booknumber);
   return (
     <IndividualItemContainer>
-      <DeleteButton
-        onClick={() => {
-          onRemove(id);
-        }}
-      >
-        삭제X
-      </DeleteButton>
+      {whichTabSelected !== '2' && (
+        <DeleteButton
+          onClick={() => {
+            onRemove(name);
+            deleteNotice(booknumber);
+          }}
+        >
+          삭제X
+        </DeleteButton>
+      )}
       <IndividualItemNameType>
         <ItemName>{name}</ItemName>
         <ItemType>{type}</ItemType>
@@ -87,9 +111,9 @@ const IndividualItem = ({
           </Price>
           <ReserveButton>예약하기</ReserveButton>
         </LocaCapaPriceReserve>
-        {/* <IndividualItemImgWrapper> */}
-        <IndividualItemImg src={thumbnailImage} />
-        {/* </IndividualItemImgWrapper> */}
+        <IndividualItemImgWrapper>
+          <IndividualItemImg src={thumbnailImage} />
+        </IndividualItemImgWrapper>
       </IndividualItemText>
     </IndividualItemContainer>
   );
@@ -113,8 +137,16 @@ const DeleteButton = styled.p`
   font-size: 20px;
 `;
 
+const IndividualItemImgWrapper = styled.div`
+  ${props => props.theme.variables.flex('', 'center', 'center')};
+  height: 250px;
+  width: 380px;
+`;
+
 const IndividualItemImg = styled.img`
-  width: 60%;
+  object-fit: cover;
+  height: 250px;
+  width: 380px;
 `;
 
 const IndividualItemText = styled.div`
@@ -123,6 +155,7 @@ const IndividualItemText = styled.div`
 `;
 
 const IndividualItemNameType = styled.div``;
+
 const ItemName = styled.p`
   font-size: 35px;
 `;
@@ -133,9 +166,13 @@ const LocaCapaPriceReserve = styled.div`
   ${props => props.theme.variables.flex('column', 'flex-end', '')};
 `;
 
-const CheckIn = styled.p``;
+const CheckIn = styled.p`
+  text-align: center;
+`;
 
-const CheckOut = styled.p``;
+const CheckOut = styled.p`
+  text-align: center;
+`;
 
 const Location = styled.p`
   margin: 10px auto 10px auto;
@@ -153,7 +190,7 @@ const Price = styled.p`
 `;
 
 const ReserveButton = styled.p`
-  margin: 35px auto 5px auto;
+  margin: 20px auto 5px auto;
   font-weight: 700;
   text-decoration: underline;
 `;

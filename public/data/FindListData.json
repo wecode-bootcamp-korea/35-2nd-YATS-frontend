@@ -1,0 +1,88 @@
+[
+  {
+    "stay_id": "1",
+    "stay_name": "하야트",
+    "stay_type":펜션,
+    "stay_image": "https://www.ui4u.go.kr/depart/img/content/sub03/img_con03030100_01.jpg",
+    "price": "10000",
+    "quantity": 6,
+    "stay_latitude":000,
+  },
+  {
+    "stay_id": "2",
+    "name": "힐튼",
+    "src": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/rZ1xSXKCJ4cd-IExOYahRWdrqoo.jpg",
+    "price": "20000",
+    "quantity": 7
+  },
+  {
+    "stay_id": "3",
+    "name": "신라",
+    "src": "https://cdn.imweb.me/upload/S201807025b39d1981b0b0/16b98d3e3d30e.jpg",
+    "price": "30000",
+    "quantity": 8
+  },
+  {
+    "stay_id": "4",
+    "name": "조선",
+    "src": "http://www.palnews.co.kr/news/photo/201801/92969_25283_5321.jpg",
+    "price": "40000",
+    "quantity": 9
+  },
+  {
+    "stay_id": "5",
+    "name": "포시즌",
+    "src": "http://img.segye.com/content/image/2021/06/18/20210618504877.jpg",
+    "price": "50000",
+    "quantity": 5
+  },
+  {
+    "stay_id": "6",
+    "name": "반얀트리",
+    "src": "http://img.segye.com/content/image/2021/06/18/20210618504877.jpg",
+    "price": "50000",
+    "quantity": 5
+  },
+  {
+    "stay_id": "7",
+    "name": "하야트",
+    "src": "https://www.ui4u.go.kr/depart/img/content/sub03/img_con03030100_01.jpg",
+    "price": "10000",
+    "quantity": 6
+  },
+  {
+    "stay_id": "8",
+    "name": "힐튼",
+    "src": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/rZ1xSXKCJ4cd-IExOYahRWdrqoo.jpg",
+    "price": "20000",
+    "quantity": 7
+  },
+  {
+    "stay_id": "9",
+    "name": "신라",
+    "src": "https://cdn.imweb.me/upload/S201807025b39d1981b0b0/16b98d3e3d30e.jpg",
+    "price": "30000",
+    "quantity": 8
+  },
+  {
+    "stay_id": "10",
+    "name": "조선",
+    "src": "http://www.palnews.co.kr/news/photo/201801/92969_25283_5321.jpg",
+    "price": "40000",
+    "quantity": 9
+  },
+  {
+    "stay_id": "11",
+    "name": "포시즌",
+    "src": "http://img.segye.com/content/image/2021/06/18/20210618504877.jpg",
+    "price": "50000",
+    "quantity": 5
+  },
+  {
+    "stay_id": "12",
+    "name": "반얀트리",
+    "src": "http://img.segye.com/content/image/2021/06/18/20210618504877.jpg",
+    "price": "50000",
+    "quantity": 5
+  }
+]

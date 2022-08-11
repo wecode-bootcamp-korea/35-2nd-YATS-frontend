@@ -54,6 +54,7 @@ const ProductEditor = ({
   FilterListButtonData,
   travelInputOnChange,
   tavelInputText,
+  travelInputHandle,
 }) => {
   const [test1, setTest1] = useState('체크인');
   useEffect(() => {
@@ -237,7 +238,7 @@ const ProductEditor = ({
         />
       </FindListStyle.FirstFindList>
       <FindListStyle.SecondFindList>
-        <FindListStyle.SearchButton>
+        <FindListStyle.SearchButton onClick={() => travelInputHandle()}>
           SEARCH&ensp;&#10230;
         </FindListStyle.SearchButton>
       </FindListStyle.SecondFindList>

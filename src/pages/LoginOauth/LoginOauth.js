@@ -17,7 +17,7 @@ const LoginOauth = () => {
           navigate('/login');
           alert('회원가입 되셨습니다!');
         } else if (result.message === 'LOGIN') {
-          navigate('/');
+          navigate('/FindList');
           alert('로그인 성공!');
           localStorage.setItem('access_token', result.token);
         } else {

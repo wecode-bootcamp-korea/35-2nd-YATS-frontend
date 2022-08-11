@@ -1,38 +1,17 @@
 import { useEffect, useState } from 'react';
 
 export default function useHandleInput() {
+  const [roomList, setRoomList] = useState([]);
   const [stayData, setStayData] = useState('');
   const [roomData, setRoomData] = useState('');
-  const [roomDataList, setRoomDataList] = useState('');
-
-  useEffect(() => {
-    const stayForm = new FormData();
-    const roomForm = new FormData();
-    const roomListFrom = new FormData();
-
-    setStayData(stayForm);
-    setRoomData(roomForm);
-    setRoomDataList(roomListFrom);
-  }, []);
-
-  const [roomInfo, setRoomInfo] = useState({
-    room_name: '',
-    bed: '',
-    min_capacity: '',
-    max_capacity: '',
-    checkin: '',
-    checkout: '',
-    area: '',
-    week_price: '',
-    weekend_price: '',
-    peek_price: '',
-    room_type: '',
+  const [roomDataList, setRoomDataList] = useState({});
+  const [checkboxValues] = useState({
+    themes: [],
     feature: [],
     amenity: [],
     add_on: [],
-    room_images: '',
   });
-  const [stayInfo, setStayInfo] = useState({
+  const stayInfo = {
     stay_name: '',
     address: '',
     latitude: '',
@@ -44,129 +23,89 @@ export default function useHandleInput() {
     content_top: '',
     content_bottom: '',
     types: '',
-    themes: [],
-    rooms: [],
     stay_images: '',
-  });
-  const initializeRoomInfo = () => {
-    setRoomInfo({
-      room_name: '',
-      bed: '',
-      min_capacity: '',
-      max_capacity: '',
-      checkin: '',
-      checkout: '',
-      area: '',
-      week_price: '',
-      weekend_price: '',
-      peek_price: '',
-      room_type: '',
-      feature: [],
-      amenity: [],
-      add_on: [],
-      room_images: '',
-    });
   };
-  const [roomList, setRoomList] = useState([]);
+
+  useEffect(() => {
+    const stayForm = new FormData();
+    const roomForm = new FormData();
+
+    setStayData(stayForm);
+    setRoomData(roomForm);
+  }, []);
 
   const handleInput = e => {
     const { name, value } = e.target;
-    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
-    if (!isInfoOfRoom) {
+    const isInfoOfStay = Object.keys(stayInfo).includes(name);
+
+    if (isInfoOfStay) {
       stayData.set(name, value);
     } else {
-      setRoomInfo({ ...roomInfo, [name]: value });
+      roomData.set(name, value);
+      console.log(name, value);
     }
   };
 
   const handleInputFile = e => {
     const { name } = e.target;
-    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
-    const formData = new FormData();
-    // formData.append('stay_images', e.target.files[0]);
+    const isInfoOfStay = Object.keys(stayInfo).includes(name);
 
-    if (!isInfoOfRoom) {
+    if (isInfoOfStay) {
       for (let i = 0; i < e.target.files.length; i++) {
-        stayData.append(`${name}`, e.target.files);
+        stayData.append(`${name}`, e.target.files[i]);
       }
     } else {
-      setRoomInfo({ ...roomInfo, [name]: formData });
+      for (let i = 0; i < e.target.files.length; i++) {
+        roomData.append(`${name}`, e.target.files[i]);
+      }
     }
-  };
-
-  const deleteCheckValue = (targetInfo, inputName, checkedValue) => {
-    const newValues = targetInfo[inputName].filter(ele => {
-      return ele !== checkedValue;
-    });
-
-    targetInfo[inputName] = newValues;
-  };
-
-  const checkIfItExist = (targetInfo, inputName, checkedValue) => {
-    const isExisted = targetInfo[inputName].includes(checkedValue);
-
-    isExisted
-      ? deleteCheckValue(targetInfo, inputName, checkedValue)
-      : targetInfo[inputName].push(checkedValue);
   };
 
   const handleCheckbox = e => {
     const { name, value } = e.target;
-    const isInfoOfRoom = Object.keys(roomInfo).includes(name);
 
-    if (!isInfoOfRoom) {
-      checkIfItExist(stayInfo, name, value);
-      stayData.set(name, stayInfo[name]);
-    } else {
-      checkIfItExist(roomInfo, name, value);
-    }
+    checkIfItExist(name, value);
+    stayData.set(name, checkboxValues[name]);
+  };
+
+  const checkIfItExist = (inputName, checkedValue) => {
+    const isExisted = checkboxValues[inputName].includes(checkedValue);
+
+    isExisted
+      ? deleteCheckValue(inputName, checkedValue)
+      : checkboxValues[inputName].push(checkedValue);
+  };
+
+  const deleteCheckValue = (inputName, checkedValue) => {
+    const newValues = checkboxValues[inputName].filter(ele => {
+      return ele !== checkedValue;
+    });
+
+    checkboxValues[inputName] = newValues;
   };
 
   const addRoomInList = e => {
-    setRoomList([...roomList, roomInfo]);
+    setRoomList([...roomList, { room_name: roomData.get('room_name') }]);
     addRoomData();
   };
 
   const addRoomData = () => {
-    ROOM_DATA.forEach(room => {
-      roomData.append(room.name, roomInfo[room.name]);
-    });
-    roomDataList.append(roomInfo.room_name, roomData);
+    const roomName = roomData.get('room_name');
 
-    stayData.append('rooms', roomData);
+    roomData.append('stay_name', stayData.get('stay_name'));
+    setRoomDataList({ ...roomDataList, [roomName]: roomData });
   };
 
   return {
     handleInput,
     handleInputFile,
     handleCheckbox,
-    initializeRoomInfo,
     addRoomInList,
-    stayInfo,
-    setRoomInfo,
-    roomInfo,
     roomList,
     setRoomList,
     stayData,
     roomData,
     roomDataList,
+    setRoomDataList,
   };
 }
-
-const ROOM_DATA = [
-  { id: 1, name: 'room_name' },
-  { id: 2, name: 'bed' },
-  { id: 3, name: 'min_capacity' },
-  { id: 4, name: 'max_capacity' },
-  { id: 5, name: 'checkin' },
-  { id: 6, name: 'checkout' },
-  { id: 7, name: 'area' },
-  { id: 8, name: 'week_price' },
-  { id: 9, name: 'weekend_price' },
-  { id: 10, name: 'peek_price' },
-  { id: 11, name: 'room_type' },
-  { id: 12, name: 'feature' },
-  { id: 13, name: 'amenity' },
-  { id: 14, name: 'add_on' },
-  { id: 15, name: 'room_images' },
-];

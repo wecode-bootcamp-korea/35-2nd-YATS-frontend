@@ -4,17 +4,16 @@ import styled from 'styled-components';
 import RoomList from './RoomList';
 
 const RoomsInfo = ({
-  roomInfo,
+  roomData,
   stayData,
   handleInput,
   handleInputFile,
   handleCheckbox,
-  stayInfo,
-  initializeRoomInfo,
   addRoomInList,
   roomList,
   setRoomList,
   roomDataList,
+  setRoomDataList,
 }) => {
   Modal.setAppElement('#root');
 
@@ -22,17 +21,17 @@ const RoomsInfo = ({
     <InputContainer>
       <InputTitle>스테이 룸 정보</InputTitle>
       <RoomList
+        ROOM_DATA={ROOM_DATA}
+        stayData={stayData}
+        roomData={roomData}
+        roomDataList={roomDataList}
+        roomList={roomList}
+        setRoomDataList={setRoomDataList}
+        setRoomList={setRoomList}
+        addRoomInList={addRoomInList}
         handleInput={handleInput}
         handleInputFile={handleInputFile}
         handleCheckbox={handleCheckbox}
-        ROOM_DATA={ROOM_DATA}
-        stayInfo={stayInfo}
-        initializeRoomInfo={initializeRoomInfo}
-        addRoomInList={addRoomInList}
-        roomList={roomList}
-        setRoomList={setRoomList}
-        stayData={stayData}
-        roomDataList={roomDataList}
       />
     </InputContainer>
   );

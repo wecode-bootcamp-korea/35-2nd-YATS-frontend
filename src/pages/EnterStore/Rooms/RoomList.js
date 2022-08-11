@@ -5,25 +5,29 @@ import Room from './Room';
 import RoomModal from './RoomModal';
 
 const RoomList = ({
+  className,
+  ROOM_DATA,
+  roomData,
+  roomDataList,
+  roomList,
+  setRoomDataList,
+  setRoomList,
+  addRoomInList,
   handleInput,
   handleInputFile,
   handleCheckbox,
-  className,
-  ROOM_DATA,
-  stayInfo,
-  initializeRoomInfo,
-  setRoomList,
-  roomList,
-  addRoomInList,
-  stayData,
-  roomDataList,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModal = e => {
+    console.log('modal');
     e.preventDefault();
-    initializeRoomInfo();
     setIsOpen(!isOpen);
+    if (isOpen) {
+      for (let key of roomData.keys()) {
+        roomData.delete(key);
+      }
+    }
   };
 
   const deleteRoom = targetName => {
@@ -33,8 +37,11 @@ const RoomList = ({
           return targetName !== room.room_name;
         })
       );
-      roomDataList.delete(targetName);
-      stayData.set('rooms', roomDataList);
+      setRoomDataList(
+        roomDataList.filter(room => {
+          return targetName !== room.room_name;
+        })
+      );
     }
   };
 
@@ -54,7 +61,6 @@ const RoomList = ({
         handleInputFile={handleInputFile}
         handleCheckbox={handleCheckbox}
         ROOM_DATA={ROOM_DATA}
-        initializeRoomInfo={initializeRoomInfo}
         handleModal={handleModal}
         addRoomInList={addRoomInList}
       />

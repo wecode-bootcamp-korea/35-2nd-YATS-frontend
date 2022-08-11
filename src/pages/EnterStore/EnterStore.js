@@ -13,21 +13,16 @@ import {
 
 const EnterStore = () => {
   const {
-    handleInput,
-    handleInputFile,
-    handleCheckbox,
-    initializeRoomInfo,
-    addRoomInList,
-    stayInfo,
-    roomInfo,
-    roomList,
-    setRoomList,
-    stayImages,
-    roomImagesList,
-    formData,
     stayData,
     roomData,
     roomDataList,
+    setRoomDataList,
+    roomList,
+    setRoomList,
+    handleInput,
+    handleInputFile,
+    handleCheckbox,
+    addRoomInList,
   } = useHandleInput();
 
   const addStayinList = e => {
@@ -36,16 +31,35 @@ const EnterStore = () => {
     for (let pair of stayData.entries()) {
       console.log('stayData', pair[0] + ', ' + pair[1]);
     }
-    for (let pair of roomData.entries()) {
-      console.log('roomData', pair[0] + ', ' + pair[1]);
-    }
-    for (let pair of roomDataList.entries()) {
-      console.log('roomDataList', pair[0] + ', ' + pair[1]);
-    }
+    // for (let pair of roomData.entries()) {
+    //   console.log('roomData: ', pair[0] + ', ' + pair[1]);
+    // }
+    // for (let pair of roomDataList.entries()) {
+    //   console.log('roomDataList: ', pair[0] + ', ' + pair[1]);
+    // }
+    // // for (let pair of roomDataList.get('304호').entries()) {
+    // //   console.log('roomDataList', pair[0] + ', ' + pair[1]);
+    // // }
+    // console.log(
+    //   'roomDataList 304호:',
+    //   JSON.stringify(roomDataList.get('304호')[0])
+    // );
 
-    fetch('http://10.58.4.88:8000/entering', {
-      method: 'POST',
-      body: stayData,
+    // fetch('http://10.58.4.88:8000/entering', {
+    //   method: 'POST',
+    //   body: stayData,
+    // });
+    roomList.forEach(ele => {
+      const roomName = ele.room_name;
+      // const formData = new FormData(roomDataList[roomName]);
+      // fetch(`http://10.58.4.88:8000/entering/room`, {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+
+      for (let pair of roomData.entries()) {
+        console.log('formData: ', pair[0] + ', ' + pair[1]);
+      }
     });
     // fetch(
     //   `http://10.58.4.88:8000/stays/entering/stayimage?stay_name=${stayInfo.stay_name}`,
@@ -73,7 +87,7 @@ const EnterStore = () => {
         {ENTER_DESCRIPTION.map(dscrp => {
           return <Contents key={dscrp.id}>{dscrp.content}</Contents>;
         })}
-        <Form onSubmit={addStayinList} encType="multipart/form-data">
+        <Form encType="multipart/form-data">
           {STAY_DATA.map(input => {
             return (
               <InputList
@@ -86,18 +100,18 @@ const EnterStore = () => {
             );
           })}
           <RoomsInfo
-            stayInfo={stayInfo}
             roomList={roomList}
+            setRoomDataList={setRoomDataList}
             stayData={stayData}
+            roomData={roomData}
             roomDataList={roomDataList}
             setRoomList={setRoomList}
             handleInput={handleInput}
             handleInputFile={handleInputFile}
             handleCheckbox={handleCheckbox}
-            initializeRoomInfo={initializeRoomInfo}
             addRoomInList={addRoomInList}
           />
-          <EnterButton>소개하기</EnterButton>
+          <EnterButton onClick={addStayinList}>소개하기</EnterButton>
         </Form>
       </Container>
     </div>

@@ -8,6 +8,12 @@ const variables = {
     align-items: ${align};
   `,
 
+  Position: (position = 'absoulte', top = '0', left = '0') => `
+  Position: ${position};
+  top: ${top};
+  left: ${left};
+`,
+
   absoluteCenter: css`
     position: absolute;
     top: 50%;

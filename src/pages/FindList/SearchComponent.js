@@ -12,6 +12,7 @@ const SearchComponent = ({
   location,
   setLocation,
   latitudeLongitudeHandle,
+  goToStayDetail,
 }) => {
   //console.log(findList);
   //console.log(findList.name);
@@ -35,13 +36,25 @@ const SearchComponent = ({
   return (
     <FindListStyle.ComponentContainer>
       <FindListStyle.LeftComponent>
-        <FindListStyle.HotelName>{findList.stay_name}</FindListStyle.HotelName>
-        <FindListStyle.StayWhat>{findList.stay_type}</FindListStyle.StayWhat>
-        <FindListStyle.Information>
+        <FindListStyle.HotelName
+          onClick={() => goToStayDetail(findList.stay_id)}
+        >
+          {findList.stay_name}
+        </FindListStyle.HotelName>
+        <FindListStyle.StayWhat
+          onClick={() => goToStayDetail(findList.stay_id)}
+        >
+          {findList.stay_type}
+        </FindListStyle.StayWhat>
+        <FindListStyle.Information
+          onClick={() => goToStayDetail(findList.stay_id)}
+        >
           {findList.stay_address.stay_region}/
           {findList.stay_address.stay_disrtict}
         </FindListStyle.Information>
-        <FindListStyle.Information>
+        <FindListStyle.Information
+          onClick={() => goToStayDetail(findList.stay_id)}
+        >
           기준 {findList.stay_capacitiy.min_capacity}명(최대{' '}
           {findList.stay_capacitiy.max_capacity}명)
         </FindListStyle.Information>
@@ -49,7 +62,11 @@ const SearchComponent = ({
           ￦{parseInt(findList.stay_price.low_price).toLocaleString('ko-KR')} ~
           ￦{parseInt(findList.stay_price.high_price).toLocaleString('ko-KR')}
         </FindListStyle.Information>
-        <FindListStyle.Reservation>예약하기</FindListStyle.Reservation>
+        <FindListStyle.Reservation
+          onClick={() => goToStayDetail(findList.stay_id)}
+        >
+          예약하기
+        </FindListStyle.Reservation>
         {/* <FindListStyle.Like
           src="./images/FindList/heart.png"
           alt="Heart"

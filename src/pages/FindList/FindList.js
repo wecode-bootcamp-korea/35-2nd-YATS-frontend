@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import { useSearchParams, useNavigate } from 'react';
+import { useNavigate } from 'react-router-dom';
 import FindListEditor from './FindListEditor';
 import SearchComponent from './SearchComponent';
 import PaginationComponent from './PaginationComponent';
@@ -11,6 +12,11 @@ import * as FindListStyle from './FindList.style';
 import SearchAreaAtive from './FindListEditor/FindListSearchArea/SearchAreaAtive';
 
 const FindList = () => {
+  const navigate = useNavigate();
+  const goToStayDetail = e => {
+    console.log(e);
+    navigate(`/StayDetail/${e}`);
+  };
   //const category = useSearchParams.get('category');
   //  navigate('?category=${category}');
   // useLocation / useSearchParams
@@ -506,6 +512,7 @@ const FindList = () => {
                   findList={findList}
                   key={findList.stay_id}
                   area={area}
+                  goToStayDetail={goToStayDetail}
                 />
               );
             })}
@@ -521,6 +528,7 @@ const FindList = () => {
                   location={location}
                   setLocation={setLocation}
                   latitudeLongitudeHandle={latitudeLongitudeHandle}
+                  goToStayDetail={goToStayDetail}
                 />
               );
             })}

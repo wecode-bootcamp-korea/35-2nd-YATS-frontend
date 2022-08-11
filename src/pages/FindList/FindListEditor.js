@@ -238,7 +238,11 @@ const ProductEditor = ({
         />
       </FindListStyle.FirstFindList>
       <FindListStyle.SecondFindList>
-        <FindListStyle.SearchButton onClick={() => travelInputHandle()}>
+        <FindListStyle.SearchButton
+          onClick={() => {
+            travelInputHandle();
+          }}
+        >
           SEARCH&ensp;&#10230;
         </FindListStyle.SearchButton>
       </FindListStyle.SecondFindList>

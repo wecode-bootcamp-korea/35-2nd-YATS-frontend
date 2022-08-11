@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const ComponentContainer = styled.div`
   ${props => props.theme.variables.flex()}
   height: 400px;
-  width: 50%;
+  width: 45%;
   min-width: 300px;
 
   .slick-slider {
